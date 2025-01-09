@@ -94,15 +94,15 @@ class UserRepositoryTest {
     }
 
     @Test
-    void findById() {
-        User user = userRepository.findById("test");
+    void findUserById() {
+        User user = userRepository.findUserById("test");
 
         Assertions.assertThat(user).isNotNull();
     }
 
     @Test
-    void findByIdNotFound() {
-        User user = userRepository.findById("test1");
+    void findUserByIdNotFound() {
+        User user = userRepository.findUserById("test1");
 
         Assertions.assertThat(user).isNull();
     }

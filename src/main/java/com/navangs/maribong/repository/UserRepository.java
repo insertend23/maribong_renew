@@ -1,12 +1,13 @@
 package com.navangs.maribong.repository;
 
 import com.navangs.maribong.dao.User;
+import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
     Long countBy();
 
-    boolean existsById(String id);
+    boolean existsById(@NonNull String id);
 
     boolean existsByName(String name);
 
@@ -16,5 +17,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsProfileById(String id);
 
-    User findById(String id);
+    User findUserById(String id);
 }
