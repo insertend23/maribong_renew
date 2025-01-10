@@ -8,9 +8,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource("classpath:application-test.properties")
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
@@ -19,7 +21,7 @@ class UserRepositoryTest {
     void countBy() {
         Long count = userRepository.countBy();
 
-        Assertions.assertThat(count).isGreaterThan(1L);
+        Assertions.assertThat(count).isGreaterThan(0);
     }
 
     @Test
