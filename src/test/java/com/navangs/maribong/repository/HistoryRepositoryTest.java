@@ -3,6 +3,7 @@ package com.navangs.maribong.repository;
 import com.navangs.maribong.DataJpaCustomTest;
 import com.navangs.maribong.dao.History;
 import com.navangs.maribong.dao.User;
+import java.time.LocalDate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,16 @@ class HistoryRepositoryTest {
             .birthMonth("1")
             .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        History history = History.builder()
+            .user(savedUser)
+            .title("테스트 봉사기록")
+            .startDate(LocalDate.of(2024, 11, 1))
+            .endDate(LocalDate.of(2024, 12, 1))
+            .build();
+
+        historyRepository.save(history);
     }
 
     @Test
