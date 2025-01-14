@@ -2,19 +2,22 @@ package com.navangs.maribong.dao;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "user_info")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(nullable = false)
@@ -32,16 +35,14 @@ public class User {
     @Column(nullable = false)
     private String birthMonth;
 
-    @Column(nullable = false)
+    @ColumnDefault("1")
     private String pushChk;
 
     @ColumnDefault("current_timestamp()")
-    @Column(nullable = false)
     private LocalDateTime regDate;
 
     @UpdateTimestamp
     @ColumnDefault("current_timestamp()")
-    @Column(nullable = false)
     private LocalDateTime modDate;
 
     private String token;
