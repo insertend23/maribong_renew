@@ -29,7 +29,7 @@ public class History {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String title;
 
     @Column(nullable = false)
