@@ -1,21 +1,32 @@
 package com.navangs.maribong.repository;
 
+import com.navangs.maribong.DataJpaCustomTest;
 import com.navangs.maribong.dao.User;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.TestPropertySource;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestPropertySource("classpath:application-test.properties")
+@DataJpaCustomTest
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+
+    @BeforeAll
+    void setUp() {
+        User user = User.builder()
+            .id("test")
+            .pwd("testtest")
+            .name("test")
+            .sex("1")
+            .birthYear("2025")
+            .birthMonth("1")
+            .build();
+
+        userRepository.save(user);
+    }
 
     @Test
     void countBy() {
