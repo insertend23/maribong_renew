@@ -23,7 +23,7 @@ class QuizRepositoryTest {
 
     @Test
     void findQuizById() {
-        Quiz quiz = quizRepository.findQuizById(1L);
+        Quiz quiz = quizRepository.findQuizById(1);
 
         Assertions.assertThat(quiz).isNotNull();
     }

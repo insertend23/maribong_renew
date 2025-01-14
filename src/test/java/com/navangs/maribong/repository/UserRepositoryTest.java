@@ -20,9 +20,9 @@ class UserRepositoryTest {
             .id("test")
             .pwd("testtest")
             .name("test")
-            .sex("1")
-            .birthYear("2025")
-            .birthMonth("1")
+            .gender('M')
+            .birthYear(2025)
+            .birthMonth(1)
             .build();
 
         userRepository.save(user);
