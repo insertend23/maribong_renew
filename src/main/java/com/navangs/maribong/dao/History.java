@@ -16,19 +16,19 @@ import org.hibernate.annotations.OnDeleteAction;
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @Column(nullable = false)
-    String title;
+    private String title;
 
     @Column(nullable = false)
-    LocalDateTime startDate;
+    private LocalDateTime startDate;
 
     @Column(nullable = false)
-    LocalDateTime endDate;
+    private LocalDateTime endDate;
 }
