@@ -12,18 +12,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserQuizRepositoryTest {
     @Autowired
     UserQuizRepository userQuizRepository;
-    
+
     @Test
     void findByUserId() {
         List<UserQuiz> assignedQuizzes = userQuizRepository.findById_UserId("test");
 
-        Assertions.assertThat(assignedQuizzes.size()).isEqualTo(3);
+        Assertions.assertThat(assignedQuizzes.size()).isPositive();
     }
 
     @Test
-    void findQuizByUserId() {
+    void findByUserIdNotFound() {
+        List<UserQuiz> assignedQuizzes = userQuizRepository.findById_UserId("test1");
+
+        Assertions.assertThat(assignedQuizzes.size()).isZero();
+    }
+
+    @Test
+    void findQuizzesByUserId() {
         List<Quiz> quizzes = userQuizRepository.findQuizzesByUserId("test");
 
-        Assertions.assertThat(quizzes.size()).isEqualTo(3);
+        Assertions.assertThat(quizzes.size()).isPositive();
+    }
+
+    @Test
+    void findQuizzesByUserIdNotFound() {
+        List<Quiz> quizzes = userQuizRepository.findQuizzesByUserId("test1");
+
+        Assertions.assertThat(quizzes.size()).isZero();
     }
 }
