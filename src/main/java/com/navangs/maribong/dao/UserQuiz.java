@@ -38,7 +38,7 @@ public class UserQuiz {
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
-    @ColumnDefault("'N'")
+    @ColumnDefault("0")
     @Column(name = "pass_yn")
-    private Character passYn;
+    private Boolean passYn;
 }
