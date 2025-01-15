@@ -3,7 +3,6 @@ package com.navangs.maribong.repository;
 import com.navangs.maribong.DataJpaCustomTest;
 import com.navangs.maribong.dao.User;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,20 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
-
-    @BeforeAll
-    void setUp() {
-        User user = User.builder()
-            .id("test")
-            .pwd("testtest")
-            .name("test")
-            .gender('M')
-            .birthYear(2025)
-            .birthMonth(1)
-            .build();
-
-        userRepository.save(user);
-    }
 
     @Test
     void countBy() {
