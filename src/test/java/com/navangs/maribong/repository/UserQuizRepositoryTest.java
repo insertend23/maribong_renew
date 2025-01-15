@@ -40,4 +40,18 @@ class UserQuizRepositoryTest {
 
         Assertions.assertThat(quizzes.size()).isZero();
     }
+
+    @Test
+    void findQuizzesByUserIdAndPassYn() {
+        List<Quiz> quizzes = userQuizRepository.findQuizzesByUserIdAndPassYn("test", true);
+
+        Assertions.assertThat(quizzes.size()).isPositive();
+    }
+
+    @Test
+    void findQuizzesByUserIdAndPassYnNotFound() {
+        List<Quiz> quizzes = userQuizRepository.findQuizzesByUserIdAndPassYn("test1", false);
+
+        Assertions.assertThat(quizzes.size()).isZero();
+    }
 }

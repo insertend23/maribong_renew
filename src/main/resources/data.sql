@@ -19,8 +19,8 @@ values ('테스트 퀴즈3');
 insert into user_quiz (quiz_id, user_id)
 values (1, 'test');
 
-insert into user_quiz (quiz_id, user_id)
-values (2, 'test');
+insert into user_quiz (quiz_id, user_id, pass_yn)
+values (2, 'test', 1);
 
 insert into user_quiz (quiz_id, user_id)
 values (3, 'test');

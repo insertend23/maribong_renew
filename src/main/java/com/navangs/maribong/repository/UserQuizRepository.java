@@ -12,4 +12,7 @@ public interface UserQuizRepository extends JpaRepository<UserQuiz, UserQuizId> 
 
     @Query("SELECT uq.quiz FROM UserQuiz uq LEFT JOIN Quiz q ON uq.quiz.id = q.id WHERE uq.user.id = :userId")
     List<Quiz> findQuizzesByUserId(String userId);
+
+    @Query("SELECT uq.quiz From UserQuiz uq INNER JOIN Quiz q ON uq.quiz.id = q.id WHERE uq.user.id = :userId AND uq.passYn= :isPassed")
+    List<Quiz> findQuizzesByUserIdAndPassYn(String userId, boolean isPassed);
 }
