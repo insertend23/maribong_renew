@@ -1,8 +1,8 @@
 insert into user_info (birth_month, birth_year, gender, name, pwd, id)
 values (1, 2025, 'M', 'test', 'testtest', 'test');
 
-insert into user_info (birth_month, birth_year, gender, name, pwd, id)
-values (1, 2025, 'M', 'test2', 'testtest', 'test2');
+insert into user_info (birth_month, birth_year, gender, name, pwd, id, push_chk)
+values (1, 2025, 'M', 'test2', 'testtest', 'test2', 0);
 
 insert into user_info (birth_month, birth_year, gender, name, pwd, id)
 values (1, 2025, 'M', 'test3', 'testtest', 'test3');

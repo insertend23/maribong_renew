@@ -18,4 +18,10 @@ public interface UserRepository extends JpaRepository<User, String> {
     boolean existsProfileById(String id);
 
     User findUserById(String id);
+
+    PushChk findProjectionById(@NonNull String id);
+
+    interface PushChk {
+        Boolean getPushChk();
+    }
 }
