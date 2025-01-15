@@ -2,10 +2,9 @@ package com.navangs.maribong.repository;
 
 import com.navangs.maribong.DataJpaCustomTest;
 import com.navangs.maribong.dao.Quiz;
-import com.navangs.maribong.dao.User;
 import com.navangs.maribong.dao.UserQuiz;
-import com.navangs.maribong.dao.UserQuizId;
-import org.junit.jupiter.api.BeforeAll;
+import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,49 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserQuizRepositoryTest {
     @Autowired
     UserQuizRepository userQuizRepository;
+    
+    @Test
+    void findByUserId() {
+        List<UserQuiz> assignedQuizzes = userQuizRepository.findById_UserId("test");
 
-    @Autowired
-    QuizRepository quizRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @BeforeAll
-    void setUp() {
-        User user = User.builder()
-            .id("test")
-            .pwd("testtest")
-            .name("test")
-            .gender('M')
-            .birthYear(2025)
-            .birthMonth(1)
-            .build();
-
-        User savedUser = userRepository.save(user);
-
-        Quiz quiz = Quiz.builder()
-            .title("테스트 퀴즈")
-            .build();
-
-        Quiz savedQuiz = quizRepository.save(quiz);
-
-        UserQuizId userQuizId = UserQuizId.builder()
-            .quizId(savedQuiz.getId())
-            .userId(savedUser.getId())
-            .build();
-        UserQuiz userQuiz = UserQuiz.builder()
-            .id(userQuizId)
-            .user(savedUser)
-            .quiz(savedQuiz)
-            .build();
-
-        userQuizRepository.save(userQuiz);
+        Assertions.assertThat(assignedQuizzes.size()).isEqualTo(3);
     }
 
     @Test
     void findQuizByUserId() {
-        UserQuiz quiz = userQuizRepository.findByUserId("test").getFirst();
+        List<Quiz> quizzes = userQuizRepository.findQuizzesByUserId("test");
 
-        System.out.println(quiz);
+        Assertions.assertThat(quizzes.size()).isEqualTo(3);
     }
 }
