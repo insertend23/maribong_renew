@@ -126,4 +126,40 @@ class UserRepositoryTest {
 
         Assertions.assertThat(pushChk).isNull();
     }
+
+    @Test
+    void userSaveInsert() {
+        User user = User.builder()
+            .id("test4")
+            .pwd("testtest")
+            .name("test4")
+            .gender('M')
+            .token("testToken")
+            .birthYear(2024)
+            .birthMonth(10)
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        Assertions.assertThat(savedUser.getId()).isEqualTo("test4");
+    }
+
+    @Test
+    void userSaveUpdate() {
+        User originUser = userRepository.findUserById("test");
+        User user = User.builder()
+            .id(originUser.getId())
+            .pwd(originUser.getPwd())
+            .name("test4")
+            .gender(originUser.getGender())
+            .token(originUser.getToken())
+            .birthYear(originUser.getBirthYear())
+            .birthMonth(originUser.getBirthMonth())
+            .regTimestamp(originUser.getRegTimestamp())
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        Assertions.assertThat(savedUser.getModTimestamp()).isNotEqualTo(originUser.getModTimestamp());
+    }
 }
