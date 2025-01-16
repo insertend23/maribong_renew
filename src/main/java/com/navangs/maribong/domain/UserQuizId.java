@@ -1,4 +1,4 @@
-package com.navangs.maribong.dao;
+package com.navangs.maribong.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

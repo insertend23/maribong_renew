@@ -1,6 +1,6 @@
 package com.navangs.maribong.repository;
 
-import com.navangs.maribong.dao.Question;
+import com.navangs.maribong.domain.Question;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

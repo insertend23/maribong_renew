@@ -1,8 +1,8 @@
 package com.navangs.maribong.repository;
 
-import com.navangs.maribong.dao.Quiz;
-import com.navangs.maribong.dao.UserQuiz;
-import com.navangs.maribong.dao.UserQuizId;
+import com.navangs.maribong.domain.Quiz;
+import com.navangs.maribong.domain.UserQuiz;
+import com.navangs.maribong.domain.UserQuizId;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

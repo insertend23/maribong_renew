@@ -1,6 +1,6 @@
 package com.navangs.maribong.repository;
 
-import com.navangs.maribong.dao.User;
+import com.navangs.maribong.domain.User;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 

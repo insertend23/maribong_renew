@@ -1,7 +1,7 @@
 package com.navangs.maribong.repository;
 
 import com.navangs.maribong.DataJpaCustomTest;
-import com.navangs.maribong.dao.User;
+import com.navangs.maribong.domain.User;
 import com.navangs.maribong.repository.UserRepository.PushChk;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
