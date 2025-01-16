@@ -3,6 +3,7 @@ package com.navangs.maribong.repository;
 import com.navangs.maribong.DataJpaCustomTest;
 import com.navangs.maribong.dao.User;
 import com.navangs.maribong.repository.UserRepository.PushChk;
+import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -147,19 +148,24 @@ class UserRepositoryTest {
     @Test
     void userSaveUpdate() {
         User originUser = userRepository.findUserById("test");
+        LocalDateTime originModDate = originUser.getModTimestamp();
         User user = User.builder()
             .id(originUser.getId())
             .pwd(originUser.getPwd())
-            .name("test4")
+            .name("testt")
             .gender(originUser.getGender())
-            .token(originUser.getToken())
             .birthYear(originUser.getBirthYear())
             .birthMonth(originUser.getBirthMonth())
+            .pushChk(originUser.getPushChk())
             .regTimestamp(originUser.getRegTimestamp())
+            .modTimestamp(originModDate)
+            .token(originUser.getToken())
+            .profile(originUser.getProfile())
             .build();
 
-        User savedUser = userRepository.save(user);
+        userRepository.save(user);
+        User updatedUser = userRepository.findUserById("test");
 
-        Assertions.assertThat(savedUser.getModTimestamp()).isNotEqualTo(originUser.getModTimestamp());
+        Assertions.assertThat(updatedUser.getModTimestamp()).isNotEqualTo(originModDate);
     }
 }
