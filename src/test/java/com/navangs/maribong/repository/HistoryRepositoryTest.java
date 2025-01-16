@@ -16,13 +16,13 @@ class HistoryRepositoryTest {
     void findByUserId() {
         List<History> history = historyRepository.findByUserId("test");
 
-        Assertions.assertThat(history.size()).isPositive();
+        Assertions.assertThat(history).hasSize(1);
     }
 
     @Test
     void findByUserIdNotFound() {
         List<History> history = historyRepository.findByUserId("test1");
 
-        Assertions.assertThat(history.size()).isZero();
+        Assertions.assertThat(history).hasSize(0);
     }
 }

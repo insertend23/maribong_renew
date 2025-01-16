@@ -17,41 +17,41 @@ class UserQuizRepositoryTest {
     void findByUserId() {
         List<UserQuiz> assignedQuizzes = userQuizRepository.findById_UserId("test");
 
-        Assertions.assertThat(assignedQuizzes.size()).isPositive();
+        Assertions.assertThat(assignedQuizzes).hasSize(3);
     }
 
     @Test
     void findByUserIdNotFound() {
         List<UserQuiz> assignedQuizzes = userQuizRepository.findById_UserId("test1");
 
-        Assertions.assertThat(assignedQuizzes.size()).isZero();
+        Assertions.assertThat(assignedQuizzes).hasSize(0);
     }
 
     @Test
     void findQuizzesByUserId() {
         List<Quiz> quizzes = userQuizRepository.findQuizzesByUserId("test");
 
-        Assertions.assertThat(quizzes.size()).isPositive();
+        Assertions.assertThat(quizzes).hasSize(3);
     }
 
     @Test
     void findQuizzesByUserIdNotFound() {
         List<Quiz> quizzes = userQuizRepository.findQuizzesByUserId("test1");
 
-        Assertions.assertThat(quizzes.size()).isZero();
+        Assertions.assertThat(quizzes).hasSize(0);
     }
 
     @Test
     void findQuizzesByUserIdAndPassYn() {
         List<Quiz> quizzes = userQuizRepository.findQuizzesByUserIdAndPassYn("test", true);
 
-        Assertions.assertThat(quizzes.size()).isPositive();
+        Assertions.assertThat(quizzes).hasSize(1);
     }
 
     @Test
     void findQuizzesByUserIdAndPassYnNotFound() {
         List<Quiz> quizzes = userQuizRepository.findQuizzesByUserIdAndPassYn("test1", false);
 
-        Assertions.assertThat(quizzes.size()).isZero();
+        Assertions.assertThat(quizzes).hasSize(0);
     }
 }

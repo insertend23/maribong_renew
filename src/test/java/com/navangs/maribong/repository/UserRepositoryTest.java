@@ -19,7 +19,7 @@ class UserRepositoryTest {
     void countBy() {
         Long count = userRepository.countBy();
 
-        Assertions.assertThat(count).isGreaterThan(0);
+        Assertions.assertThat(count).isEqualTo(3);
     }
 
     @Test
