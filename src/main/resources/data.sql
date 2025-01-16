@@ -39,3 +39,18 @@ values ('2024-12-01', '2024-11-01', '테스트 봉사기록2', 'test2');
 
 insert into history (end_date, start_date, title, user_id)
 values ('2024-12-01', '2024-11-01', '테스트 봉사기록3', 'test3');
+
+insert into question (quiz_id, content, answer, choice1, choice2, choice3, choice4)
+values (1, '테스트 퀴즈 내용', '정답', '정답', '오답', '오답', '오답');
+
+insert into question (quiz_id, content, answer, choice1, choice2, choice3, choice4)
+values (1, '테스트 퀴즈 내용2', '정답', '정답', '오답', '오답', '오답');
+
+insert into question (quiz_id, content, answer, choice1, choice2, choice3, choice4)
+values (1, '테스트 퀴즈 내용3', '정답', '정답', '오답', '오답', '오답');
+
+insert into question (quiz_id, content, answer, choice1, choice2, choice3, choice4)
+values (2, '테스트 퀴즈2 내용', '정답', '정답', '오답', '오답', '오답');
+
+insert into question (quiz_id, content, answer, choice1, choice2, choice3, choice4)
+values (3, '테스트 퀴즈3 내용', '정답', '정답', '오답', '오답', '오답');
