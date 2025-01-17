@@ -95,4 +95,19 @@ insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test3', '테스트3 글', 'world', 'test group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 그을', 'world', 'group', 'area', 'react')
+VALUES ('test', '테스트 그을', 'world', 'group', 'area', 'react');
+
+insert into reply (post_id, user_id, content)
+VALUES ('1', 'test', '테스트 댓글');
+
+insert into reply (post_id, user_id, content)
+VALUES ('1', 'test', '테스트 댓글2');
+
+insert into reply (post_id, user_id, content)
+VALUES ('1', 'test', '테스트 댓글3');
+
+insert into reply (post_id, user_id, content)
+VALUES ('1', 'test2', '테스트2 댓글');
+
+insert into reply (post_id, user_id, content)
+VALUES ('1', 'test3', '테스트3 댓글');
