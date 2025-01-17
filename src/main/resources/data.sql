@@ -94,9 +94,6 @@ VALUES ('test2', '테스트2 글3', 'world', 'test group', 'test area', '라벨 
 insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test3', '테스트3 글', 'world', 'test group', 'test area', '라벨 없음');
 
-insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 그을', 'world', 'group', 'area', 'react');
-
 insert into reply (post_id, user_id, content)
 VALUES ('1', 'test', '테스트 댓글');
 

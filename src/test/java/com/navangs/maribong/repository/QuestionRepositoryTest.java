@@ -14,7 +14,7 @@ class QuestionRepositoryTest {
 
     @Test
     void findByQuizIdIn() {
-        List<Integer> quizIds = List.of(2, 3);
+        List<Integer> quizIds = List.of(1, 3);
         List<Question> questions = questionRepository.findByQuizIdIn(quizIds);
 
         Assertions.assertThat(questions).hasSize(4);
