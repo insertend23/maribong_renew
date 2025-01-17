@@ -117,3 +117,9 @@ VALUES (1, 'test_img', 'ttteeeesssstttiimmggg', 'img_path');
 
 insert into post_photo (post_id, origin_name, img_name, img_path)
 VALUES (1, 'test_img2', 'ttteeeesssstttiimmggg2', 'img_path2');
+
+insert into post_like (post_id, user_id)
+VALUES (1, 'test2');
+
+insert into post_like (post_id, user_id)
+VALUES (1, 'test3');
