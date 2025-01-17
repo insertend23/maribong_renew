@@ -54,3 +54,45 @@ values (2, '테스트 퀴즈2 내용', '정답', '정답', '오답', '오답', '
 
 insert into question (quiz_id, content, answer, choice1, choice2, choice3, choice4)
 values (3, '테스트 퀴즈3 내용', '정답', '정답', '오답', '오답', '오답');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글2', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글3', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글4', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글5', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글6', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글7', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글8', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 글9', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test2', '테스트2 글', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test2', '테스트2 글2', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test2', '테스트2 글3', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test3', '테스트3 글', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('test', '테스트 그을', 'world', 'group', 'area', 'react')

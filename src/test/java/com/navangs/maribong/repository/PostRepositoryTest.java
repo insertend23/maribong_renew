@@ -1,0 +1,32 @@
+package com.navangs.maribong.repository;
+
+import com.navangs.maribong.DataJpaCustomTest;
+import com.navangs.maribong.domain.Post;
+import java.util.List;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+@DataJpaCustomTest
+class PostRepositoryTest {
+    @Autowired
+    private PostRepository postRepository;
+
+    @Test
+    void findAll() {
+        List<Post> posts = postRepository.findAll();
+
+        Assertions.assertThat(posts).hasSize(13);
+    }
+
+    @Test
+    void findPage() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Post> posts = postRepository.findBy(pageable);
+
+        Assertions.assertThat(posts).hasSize(10);
+    }
+}
