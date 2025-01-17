@@ -111,3 +111,9 @@ VALUES ('1', 'test2', '테스트2 댓글');
 
 insert into reply (post_id, user_id, content)
 VALUES ('1', 'test3', '테스트3 댓글');
+
+insert into post_photo (post_id, origin_name, img_name, img_path)
+VALUES (1, 'test_img', 'ttteeeesssstttiimmggg', 'img_path');
+
+insert into post_photo (post_id, origin_name, img_name, img_path)
+VALUES (1, 'test_img2', 'ttteeeesssstttiimmggg2', 'img_path2');
