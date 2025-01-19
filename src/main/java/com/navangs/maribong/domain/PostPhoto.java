@@ -27,7 +27,7 @@ public class PostPhoto {
     private Integer id;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id")
     private Post post;
 
