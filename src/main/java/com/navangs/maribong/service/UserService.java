@@ -3,7 +3,7 @@ package com.navangs.maribong.service;
 import com.navangs.maribong.domain.History;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
-import com.navangs.maribong.dto.UserInfoDTO;
+import com.navangs.maribong.dto.UserMyPageDTO;
 
 public interface UserService {
     Long getUserCount();
@@ -12,7 +12,7 @@ public interface UserService {
 
     void login(String userId, String password);
 
-    UserInfoDTO getUserInfo(String userId);
+    UserMyPageDTO getUserInfo(String userId);
 
     void updateProfile(String userId, String profile);
 

@@ -1,6 +1,6 @@
 package com.navangs.maribong.dto;
 
-public class UserInfoDTO {
+public class UserMyPageDTO {
     String userId;
     String userName;
     String gender;
