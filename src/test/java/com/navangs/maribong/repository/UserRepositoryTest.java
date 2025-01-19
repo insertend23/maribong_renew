@@ -16,8 +16,8 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    void countBy() {
-        Long count = userRepository.countBy();
+    void count() {
+        Long count = userRepository.count();
 
         Assertions.assertThat(count).isEqualTo(3);
     }

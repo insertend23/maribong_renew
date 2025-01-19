@@ -5,8 +5,6 @@ import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, String> {
-    Long countBy();
-
     boolean existsById(@NonNull String id);
 
     boolean existsByName(String name);
