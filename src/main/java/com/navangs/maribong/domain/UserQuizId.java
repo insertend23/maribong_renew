@@ -22,7 +22,7 @@ public class UserQuizId implements java.io.Serializable {
     private String userId;
 
     @Column(name = "quiz_id", nullable = false)
-    private Integer quizId;
+    private Long quizId;
 
     @Override
     public boolean equals(Object o) {

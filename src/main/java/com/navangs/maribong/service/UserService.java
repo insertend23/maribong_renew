@@ -6,7 +6,7 @@ import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserInfoDTO;
 
 public interface UserService {
-    Integer getUserCount();
+    Long getUserCount();
 
     void addUser(User user);
 

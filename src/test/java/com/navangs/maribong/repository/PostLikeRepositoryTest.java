@@ -14,7 +14,7 @@ class PostLikeRepositoryTest {
 
     @Test
     void findById_PostId() {
-        List<PostLike> likes = postLikeRepository.findById_PostId(1);
+        List<PostLike> likes = postLikeRepository.findById_PostId(1L);
 
         Assertions.assertThat(likes).hasSize(2);
     }

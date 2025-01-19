@@ -15,14 +15,14 @@ class ReplyRepositoryTest {
 
     @Test
     void findByPostId() {
-        List<Reply> replies = replyRepository.findByPost_Id(1);
+        List<Reply> replies = replyRepository.findByPost_Id(1L);
 
         Assertions.assertThat(replies).hasSize(5);
     }
 
     @Test
     void findByPostIdLimit() {
-        List<Reply> replies = replyRepository.findByPost_Id(1, Limit.of(3));
+        List<Reply> replies = replyRepository.findByPost_Id(1L, Limit.of(3));
 
         Assertions.assertThat(replies).hasSize(3);
     }

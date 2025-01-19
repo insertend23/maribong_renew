@@ -19,7 +19,7 @@ import org.hibernate.Hibernate;
 @AllArgsConstructor
 public class PostLikeId implements Serializable {
     @Column(name = "post_id", nullable = false)
-    private Integer postId;
+    private Long postId;
 
     @Column(name = "user_id", nullable = false)
     private String userId;

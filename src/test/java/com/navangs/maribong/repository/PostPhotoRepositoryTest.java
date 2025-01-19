@@ -14,7 +14,7 @@ class PostPhotoRepositoryTest {
 
     @Test
     void findByPostId() {
-        List<PostPhoto> photos = postPhotoRepository.findByPostId(1);
+        List<PostPhoto> photos = postPhotoRepository.findByPostId(1L);
 
         Assertions.assertThat(photos).hasSize(2);
     }

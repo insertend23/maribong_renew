@@ -24,7 +24,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class PostPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)

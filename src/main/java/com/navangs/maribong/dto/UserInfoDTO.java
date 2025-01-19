@@ -8,5 +8,5 @@ public class UserInfoDTO {
     Integer birthMonth;
     String profile;
     boolean pushChk;
-    Integer postCount;
+    Long postCount;
 }
