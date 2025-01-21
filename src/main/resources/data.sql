@@ -1,11 +1,14 @@
+insert into user_info(id, pwd, name, gender, birth_year, birth_month)
+VALUES ('admin', 'admin12345', '관리자', 'M', 2000, 12);
+
 insert into user_info (birth_month, birth_year, gender, name, pwd, id)
 values (1, 2025, 'M', 'test', 'testtest', 'test');
 
 insert into user_info (birth_month, birth_year, gender, name, pwd, id, push_chk)
 values (1, 2025, 'M', 'test2', 'testtest', 'test2', 0);
 
-insert into user_info (birth_month, birth_year, gender, name, pwd, id)
-values (1, 2025, 'M', 'test3', 'testtest', 'test3');
+insert into user_info (birth_month, birth_year, gender, name, pwd, id, profile)
+values (1, 2025, 'M', 'test3', 'testtest', 'test3', 'test_profile');
 
 insert into quiz (title)
 values ('테스트 퀴즈');
@@ -93,6 +96,12 @@ VALUES ('test2', '테스트2 글3', 'world', 'test group', 'test area', '라벨 
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test3', '테스트3 글', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('admin', '테스트 공지', 'world', 'test group', 'test area', '라벨 없음');
+
+insert into post (user_id, content, country, group_name, area_name, reaction)
+VALUES ('admin', '테스트 공지2', 'world', 'test group', 'test area', '라벨 없음');
 
 insert into reply (post_id, user_id, content)
 VALUES ('1', 'test', '테스트 댓글');
