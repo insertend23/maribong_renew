@@ -29,4 +29,11 @@ class PostRepositoryTest {
 
         Assertions.assertThat(posts).hasSize(10);
     }
+
+    @Test
+    void countById() {
+        Long postCount = postRepository.countByUserId("test");
+
+        Assertions.assertThat(postCount).isEqualTo(9L);
+    }
 }

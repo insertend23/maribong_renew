@@ -6,5 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
+    Long countByUserId(String userId);
+
     Page<Post> findBy(Pageable pageable);
 }
