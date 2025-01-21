@@ -19,7 +19,7 @@ class PostRepositoryTest {
     void findAll() {
         List<Post> posts = postRepository.findAll();
 
-        Assertions.assertThat(posts).hasSize(13);
+        Assertions.assertThat(posts).hasSize(15);
     }
 
     @Test

@@ -18,7 +18,7 @@ class UserRepositoryTest {
     void count() {
         Long count = userRepository.count();
 
-        Assertions.assertThat(count).isEqualTo(3);
+        Assertions.assertThat(count).isEqualTo(4);
     }
 
     @Test
