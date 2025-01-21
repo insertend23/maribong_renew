@@ -2,7 +2,6 @@ package com.navangs.maribong.repository;
 
 import com.navangs.maribong.DataJpaCustomTest;
 import com.navangs.maribong.domain.User;
-import com.navangs.maribong.repository.UserRepository.PushChk;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -105,27 +104,6 @@ class UserRepositoryTest {
         User user = userRepository.findUserById("test1");
 
         Assertions.assertThat(user).isNull();
-    }
-
-    @Test
-    void findPushChkById() {
-        Boolean isPushChecked = userRepository.findProjectionById("test").getPushChk();
-
-        Assertions.assertThat(isPushChecked).isTrue();
-    }
-
-    @Test
-    void findPushChkByIdFalse() {
-        Boolean isPushChecked = userRepository.findProjectionById("test2").getPushChk();
-
-        Assertions.assertThat(isPushChecked).isFalse();
-    }
-
-    @Test
-    void findPushChkByIdNotFound() {
-        PushChk pushChk = userRepository.findProjectionById("test1");
-
-        Assertions.assertThat(pushChk).isNull();
     }
 
     @Test
