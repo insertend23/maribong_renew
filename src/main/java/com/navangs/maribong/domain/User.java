@@ -1,5 +1,6 @@
 package com.navangs.maribong.domain;
 
+import com.navangs.maribong.dto.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -53,4 +54,26 @@ public class User {
 
     private String token;
     private String profile;
+
+    public static User fromDTO(UserDTO dto) {
+        return User.builder()
+            .id(dto.getId())
+            .pwd(dto.getPwd())
+            .name(dto.getName())
+            .gender(dto.getGender())
+            .birthYear(dto.getBirthYear())
+            .birthMonth(dto.getBirthMonth())
+            .pushChk(dto.getPushChk())
+            .token(dto.getToken())
+            .profile(dto.getProfile())
+            .build();
+    }
+
+    public void changeProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public void conversePushChk() {
+        this.pushChk = !this.pushChk;
+    }
 }

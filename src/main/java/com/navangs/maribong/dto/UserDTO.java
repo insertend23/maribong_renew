@@ -1,7 +1,11 @@
 package com.navangs.maribong.dto;
 
-import java.time.LocalDateTime;
+import com.navangs.maribong.domain.User;
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@Builder
 public class UserDTO {
     private String id;
 
@@ -17,11 +21,21 @@ public class UserDTO {
 
     private Boolean pushChk;
 
-    private LocalDateTime regTimestamp;
-
-    private LocalDateTime modTimestamp;
-
     private String token;
 
     private String profile;
+
+    public static UserDTO fromEntity(User user) {
+        return UserDTO.builder()
+            .id(user.getId())
+            .pwd(user.getPwd())
+            .name(user.getName())
+            .gender(user.getGender())
+            .birthYear(user.getBirthYear())
+            .birthMonth(user.getBirthMonth())
+            .pushChk(user.getPushChk())
+            .token(user.getToken())
+            .profile(user.getProfile())
+            .build();
+    }
 }
