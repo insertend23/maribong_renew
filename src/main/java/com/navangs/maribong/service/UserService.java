@@ -1,28 +1,32 @@
 package com.navangs.maribong.service;
 
-import com.navangs.maribong.domain.History;
+import com.navangs.maribong.domain.User;
+import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
+import java.util.List;
 
 public interface UserService {
     Long getUserCount();
 
-    void addUser(UserDTO user);
+    User addUser(UserDTO userDTO);
 
-    void login(String userId, String password);
+    User login(String userId, String password);
 
     UserMyPageDTO getUserInfo(String userId);
 
-    void updateProfile(String userId, String profile);
+    String getProfile(String userId);
 
-    void deleteProfile(String userId);
+    String updateProfile(String userId, String profile);
 
-    void modifyUserInfo(UserDTO user);
+    String deleteProfile(String userId);
 
-    void switchPushChk(String userId);
+    User modifyUserInfo(UserDTO userDTO);
 
-    NotificationDTO getNotification(String userId);
+    Boolean switchPushChk(String userId);
 
-    History getHistory(String userId);
+    List<NotificationDTO> getNotification(String userId);
+
+    List<HistoryDTO> getHistory(String userId);
 }
