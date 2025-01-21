@@ -8,6 +8,7 @@ import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
+import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
 import com.navangs.maribong.exception.UserIdNotFoundException;
 import com.navangs.maribong.exception.UserPasswordIncorrectException;
@@ -32,6 +33,7 @@ import org.springframework.beans.BeanUtils;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
     private static UserDTO testUserDTO;
+    private static UserRegisterDTO testUserRegisterDTO;
     private static UserMyPageDTO userMyPageDTO;
 
     @Mock
@@ -58,6 +60,7 @@ class UserServiceTest {
         Integer testBirthYear = 2000;
         Integer testBirthMonth = 12;
         Boolean testPushChk = true;
+        String testToken = "test_token";
         String testProfile = "test_profile";
 
         testUserDTO = UserDTO.builder()
@@ -69,6 +72,16 @@ class UserServiceTest {
             .birthMonth(testBirthMonth)
             .pushChk(testPushChk)
             .profile(testProfile)
+            .build();
+
+        testUserRegisterDTO = UserRegisterDTO.builder()
+            .userId(testId)
+            .userPwd(testPwd)
+            .userName(testName)
+            .sex(testGender.toString())
+            .birthYear(testBirthYear)
+            .birthMonth(testBirthMonth)
+            .token(testToken)
             .build();
     }
 
@@ -83,20 +96,20 @@ class UserServiceTest {
 
     @Test
     void addUser() {
-        User user = User.fromDTO(testUserDTO);
+        User user = User.fromRegisterDTO(testUserRegisterDTO);
 
-        Mockito.when(userRepository.existsById(testUserDTO.getId())).thenReturn(false);
+        Mockito.when(userRepository.existsById(testUserRegisterDTO.getUserId())).thenReturn(false);
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
 
-        Assertions.assertThat(userService.addUser(testUserDTO)).isEqualTo(user);
+        Assertions.assertThat(userService.addUser(testUserRegisterDTO)).isEqualTo(user);
         Mockito.verify(userRepository).save(Mockito.any(User.class));
     }
 
     @Test
     void addUserExist() {
-        Mockito.when(userRepository.existsById(testUserDTO.getId())).thenReturn(true);
+        Mockito.when(userRepository.existsById(testUserRegisterDTO.getUserId())).thenReturn(true);
 
-        Assertions.assertThatThrownBy(() -> userService.addUser(testUserDTO))
+        Assertions.assertThatThrownBy(() -> userService.addUser(testUserRegisterDTO))
             .isInstanceOf(DuplicatedUserIdException.class);
     }
 

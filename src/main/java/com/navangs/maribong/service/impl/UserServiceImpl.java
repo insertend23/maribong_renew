@@ -7,6 +7,7 @@ import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
+import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
 import com.navangs.maribong.exception.UserIdNotFoundException;
 import com.navangs.maribong.exception.UserPasswordIncorrectException;
@@ -34,11 +35,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(UserDTO userDTO) {
-        if (isUserExist(userDTO.getId())) {
+    public User addUser(UserRegisterDTO userDTO) {
+        if (isUserExist(userDTO.getUserId())) {
             throw new DuplicatedUserIdException();
         }
-        User newUser = User.fromDTO(userDTO);
+        User newUser = User.fromRegisterDTO(userDTO);
 
         return userRepository.save(newUser);
     }
