@@ -48,6 +48,7 @@ public class Post extends TimeEntity {
     @Column(nullable = false, length = 10)
     private String reaction;
 
+    @Column(columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
     private boolean mark;
 }
