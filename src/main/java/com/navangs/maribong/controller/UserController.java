@@ -6,6 +6,7 @@ import com.navangs.maribong.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @RequestMapping(value = "getUserCount")
+    @RequestMapping(value = "getUserCount", method = {RequestMethod.GET, RequestMethod.POST})
     public UserCountDTO getUserCount() {
         Long count = userService.getUserCount();
 
