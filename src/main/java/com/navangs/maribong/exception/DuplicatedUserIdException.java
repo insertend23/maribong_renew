@@ -1,10 +1,9 @@
 package com.navangs.maribong.exception;
 
-import lombok.NoArgsConstructor;
+public class DuplicatedUserIdException extends MaribongException {
+    private static final String USER_ID_DUPLICATED_MSG = "아이디가 중복되었습니다.";
 
-@NoArgsConstructor
-public class DuplicatedUserIdException extends RuntimeException {
-    public DuplicatedUserIdException(String message) {
-        super(message);
+    public DuplicatedUserIdException() {
+        super(USER_ID_DUPLICATED_MSG);
     }
 }

@@ -1,10 +1,9 @@
 package com.navangs.maribong.exception;
 
-import lombok.NoArgsConstructor;
+public class UserIdNotFoundException extends MaribongException {
+    private static final String USER_ID_NOT_FOUND_MESSAGE = "등록되지 않은 사용자입니다.";
 
-@NoArgsConstructor
-public class UserIdNotFoundException extends RuntimeException {
-    public UserIdNotFoundException(String message) {
-        super(message);
+    public UserIdNotFoundException() {
+        super(USER_ID_NOT_FOUND_MESSAGE);
     }
 }

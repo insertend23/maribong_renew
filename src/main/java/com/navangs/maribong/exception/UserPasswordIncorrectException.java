@@ -1,10 +1,9 @@
 package com.navangs.maribong.exception;
 
-import lombok.NoArgsConstructor;
+public class UserPasswordIncorrectException extends MaribongException {
+    private static final String PASSWORD_INCORRECT_MESSAGE = "비밀번호가 다릅니다.";
 
-@NoArgsConstructor
-public class UserPasswordIncorrectException extends RuntimeException {
-    public UserPasswordIncorrectException(String message) {
-        super(message);
+    public UserPasswordIncorrectException() {
+        super(PASSWORD_INCORRECT_MESSAGE);
     }
 }
