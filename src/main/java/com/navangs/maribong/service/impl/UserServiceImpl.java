@@ -16,6 +16,7 @@ import com.navangs.maribong.repository.NotificationRepository;
 import com.navangs.maribong.repository.PostRepository;
 import com.navangs.maribong.repository.UserRepository;
 import com.navangs.maribong.service.UserService;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,13 @@ public class UserServiceImpl implements UserService {
     private final HistoryRepository historyRepository;
 
     @Override
+    @Transactional
     public Long getUserCount() {
         return userRepository.count();
     }
 
     @Override
+    @Transactional
     public User addUser(UserRegisterDTO userDTO) {
         if (isUserExist(userDTO.getUserId())) {
             throw new DuplicatedUserIdException();
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User login(String userId, String password) {
         User user = validateAndGetUserEntity(userId);
         if (user.getPwd().equals(password)) {
@@ -54,6 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserMyPageDTO getUserInfo(String userId) {
         User user = validateAndGetUserEntity(userId);
         Long postCount = postRepository.countByUserId(userId);
@@ -62,6 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String getProfile(String userId) {
         User user = validateAndGetUserEntity(userId);
 
@@ -69,6 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String updateProfile(String userId, String profile) {
         User user = validateAndGetUserEntity(userId);
         user.changeProfile(profile);
@@ -78,6 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String deleteProfile(String userId) {
         User user = validateAndGetUserEntity(userId);
         user.changeProfile(null);
@@ -87,6 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User modifyUserInfo(UserDTO userDTO) {
         validateAndGetUserEntity(userDTO.getId());
         User updateUser = User.fromDTO(userDTO);
@@ -95,6 +104,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Boolean switchPushChk(String userId) {
         User savedUser = validateAndGetUserEntity(userId);
         savedUser.conversePushChk();
@@ -104,6 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public List<NotificationDTO> getNotification(String userId) {
         validateAndGetUserEntity(userId);
         List<Notification> notifications = notificationRepository.findAll();
@@ -114,6 +125,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public List<HistoryDTO> getHistory(String userId) {
         validateAndGetUserEntity(userId);
         List<History> historyList = historyRepository.findByUserId(userId);
