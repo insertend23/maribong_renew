@@ -6,14 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "user_info")
@@ -22,7 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends TimeEntity {
     @Id
     @Column(length = 20)
     private String id;
@@ -45,13 +43,6 @@ public class User {
     @Column(columnDefinition = "TINYINT(1)")
     @ColumnDefault("1")
     private Boolean pushChk;
-
-    @ColumnDefault("current_timestamp()")
-    private LocalDateTime regTimestamp;
-
-    @UpdateTimestamp
-    @ColumnDefault("current_timestamp()")
-    private LocalDateTime modTimestamp;
 
     private String token;
     private String profile;

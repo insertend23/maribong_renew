@@ -8,23 +8,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reply {
+public class Reply extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,12 +37,4 @@ public class Reply {
 
     @Column(nullable = false, length = 200)
     private String content;
-
-    @CreationTimestamp
-    @ColumnDefault("current_timestamp()")
-    private LocalDateTime regTimestamp;
-
-    @UpdateTimestamp
-    @ColumnDefault("current_timestamp()")
-    private LocalDateTime updateTimestamp;
 }
