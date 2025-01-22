@@ -135,8 +135,6 @@ class UserRepositoryTest {
             .birthYear(originUser.getBirthYear())
             .birthMonth(originUser.getBirthMonth())
             .pushChk(originUser.getPushChk())
-            .regTimestamp(originUser.getRegTimestamp())
-            .modTimestamp(originModDate)
             .token(originUser.getToken())
             .profile(originUser.getProfile())
             .build();
