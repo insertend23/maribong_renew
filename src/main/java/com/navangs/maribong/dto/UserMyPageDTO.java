@@ -17,7 +17,7 @@ public class UserMyPageDTO {
     Long postCount;
 
     public static UserMyPageDTO fromEntity(User user, Long postCount) {
-        String genderLetter = user.getGender().equals('1') ? "남자" : "여자";
+        String genderLetter = user.getGender().equals('M') ? "남자" : "여자";
 
         return UserMyPageDTO.builder()
             .userId(user.getId())
