@@ -38,3 +38,6 @@ out/
 
 ### secret key ###
 application-secret.properties
+
+### file upload ###
+**/src/main/uploads/

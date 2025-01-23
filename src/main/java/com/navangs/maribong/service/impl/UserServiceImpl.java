@@ -10,6 +10,7 @@ import com.navangs.maribong.dto.UserLoginDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
+import com.navangs.maribong.exception.FileTransferFailedException;
 import com.navangs.maribong.exception.UserIdNotFoundException;
 import com.navangs.maribong.exception.UserPasswordIncorrectException;
 import com.navangs.maribong.repository.HistoryRepository;
@@ -18,14 +19,20 @@ import com.navangs.maribong.repository.PostRepository;
 import com.navangs.maribong.repository.UserRepository;
 import com.navangs.maribong.service.UserService;
 import jakarta.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    private static final String PROFILE_UPLOAD_PATH = "./src/main/uploads/profile/";
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final NotificationRepository notificationRepository;
@@ -57,7 +64,7 @@ public class UserServiceImpl implements UserService {
         }
         user.updateToken(userLoginDTO.getToken());
         userRepository.save(user);
-        
+
         return user;
     }
 
@@ -80,12 +87,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String updateProfile(String userId, String profile) {
+    public void updateProfile(String userId, MultipartFile profile) {
         User user = validateAndGetUserEntity(userId);
-        user.changeProfile(profile);
-        User savedUser = userRepository.save(user);
+        String randomProfileName = UUID.randomUUID().toString();
+        user.changeProfile(randomProfileName);
+        userRepository.save(user);
 
-        return savedUser.getProfile();
+        uploadFile(profile, randomProfileName);
     }
 
     @Override
@@ -151,5 +159,16 @@ public class UserServiceImpl implements UserService {
             throw new UserIdNotFoundException();
         }
         return savedUser;
+    }
+
+    private void uploadFile(MultipartFile profile, String randomProfileName) {
+        String fileExtension = StringUtils.getFilenameExtension(profile.getOriginalFilename());
+        String fileName = randomProfileName + "." + fileExtension;
+        Path uploadPath = Path.of(PROFILE_UPLOAD_PATH + fileName).toAbsolutePath();
+        try {
+            profile.transferTo(uploadPath);
+        } catch (IOException e) {
+            throw new FileTransferFailedException();
+        }
     }
 }

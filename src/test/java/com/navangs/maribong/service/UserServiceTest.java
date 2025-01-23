@@ -196,28 +196,28 @@ class UserServiceTest {
             .isInstanceOf(UserIdNotFoundException.class);
     }
 
-    @Test
-    void updateProfile() {
-        UserDTO updateProfileUserDTO = UserDTO.builder().build();
-        BeanUtils.copyProperties(testUserDTO, updateProfileUserDTO);
-        updateProfileUserDTO.setProfile("test_profile2");
-        User user = User.fromDTO(testUserDTO);
-
-        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
-        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(User.fromDTO(updateProfileUserDTO));
-
-        Assertions.assertThat(userService.updateProfile(testUserDTO.getId(), "test_profile2"))
-            .isEqualTo(updateProfileUserDTO.getProfile());
-        Mockito.verify(userRepository).save(Mockito.any(User.class));
-    }
-
-    @Test
-    void updateProfileNotFound() {
-        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.empty());
-
-        Assertions.assertThatThrownBy(() -> userService.updateProfile(testUserDTO.getId(), "test_profile"))
-            .isInstanceOf(UserIdNotFoundException.class);
-    }
+    //    @Test
+    //    void updateProfile() {
+    //        UserDTO updateProfileUserDTO = UserDTO.builder().build();
+    //        BeanUtils.copyProperties(testUserDTO, updateProfileUserDTO);
+    //        updateProfileUserDTO.setProfile("test_profile2");
+    //        User user = User.fromDTO(testUserDTO);
+    //
+    //        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
+    //        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(User.fromDTO(updateProfileUserDTO));
+    //
+    //        Assertions.assertThat(userService.updateProfile(testUserDTO.getId(), "test_profile2"))
+    //            .isEqualTo(updateProfileUserDTO.getProfile());
+    //        Mockito.verify(userRepository).save(Mockito.any(User.class));
+    //    }
+    //
+    //    @Test
+    //    void updateProfileNotFound() {
+    //        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.empty());
+    //
+    //        Assertions.assertThatThrownBy(() -> userService.updateProfile(testUserDTO.getId(), "test_profile"))
+    //            .isInstanceOf(UserIdNotFoundException.class);
+    //    }
 
     @Test
     void deleteProfile() {

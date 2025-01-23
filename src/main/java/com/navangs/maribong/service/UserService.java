@@ -8,6 +8,7 @@ import com.navangs.maribong.dto.UserLoginDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
     Long getUserCount();
@@ -20,7 +21,7 @@ public interface UserService {
 
     String getProfile(String userId);
 
-    String updateProfile(String userId, String profile);
+    void updateProfile(String userId, MultipartFile profile);
 
     String deleteProfile(String userId);
 
