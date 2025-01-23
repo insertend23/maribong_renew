@@ -6,6 +6,7 @@ import com.navangs.maribong.domain.User;
 import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
+import com.navangs.maribong.dto.UserLoginDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
@@ -49,12 +50,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User login(String userId, String password) {
-        User user = validateAndGetUserEntity(userId);
-        if (user.getPwd().equals(password)) {
-            return user;
+    public User login(UserLoginDTO userLoginDTO) {
+        User user = validateAndGetUserEntity(userLoginDTO.getUserId());
+        if (isPasswordIncorrect(user.getPwd(), userLoginDTO.getUserPwd())) {
+            throw new UserPasswordIncorrectException();
         }
-        throw new UserPasswordIncorrectException();
+        user.updateToken(userLoginDTO.getToken());
+        userRepository.save(user);
+        
+        return user;
     }
 
     @Override
@@ -135,6 +139,10 @@ public class UserServiceImpl implements UserService {
 
     private Boolean isUserExist(String userId) {
         return userRepository.existsById(userId);
+    }
+
+    private Boolean isPasswordIncorrect(String originPwd, String loginPwd) {
+        return !originPwd.equals(loginPwd);
     }
 
     private User validateAndGetUserEntity(String userId) {

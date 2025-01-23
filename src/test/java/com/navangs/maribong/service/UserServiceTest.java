@@ -7,6 +7,7 @@ import com.navangs.maribong.domain.User;
 import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
+import com.navangs.maribong.dto.UserLoginDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
@@ -116,27 +117,44 @@ class UserServiceTest {
     @Test
     void login() {
         User user = User.fromDTO(testUserDTO);
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .userId(testUserDTO.getId())
+            .userPwd(testUserDTO.getPwd())
+            .token("new_token")
+            .build();
 
         Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
+        User savedUser = userService.login(userLoginDTO);
 
-        Assertions.assertThat(userService.login(testUserDTO.getId(), testUserDTO.getPwd())).isEqualTo(user);
+        Assertions.assertThat(savedUser.getToken()).isEqualTo(userLoginDTO.getToken());
     }
 
     @Test
     void loginIdNotFound() {
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .userId(testUserDTO.getId())
+            .userPwd(testUserDTO.getPwd())
+            .token("new_token")
+            .build();
+
         Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.empty());
 
-        Assertions.assertThatThrownBy(() -> userService.login(testUserDTO.getId(), testUserDTO.getPwd()))
+        Assertions.assertThatThrownBy(() -> userService.login(userLoginDTO))
             .isInstanceOf(UserIdNotFoundException.class);
     }
 
     @Test
     void loginPwdIncorrect() {
         User user = User.fromDTO(testUserDTO);
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .userId(testUserDTO.getId())
+            .userPwd("wrong_password")
+            .token("new_token")
+            .build();
 
         Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
 
-        Assertions.assertThatThrownBy(() -> userService.login(testUserDTO.getId(), "incorrect_password"))
+        Assertions.assertThatThrownBy(() -> userService.login(userLoginDTO))
             .isInstanceOf(UserPasswordIncorrectException.class);
     }
 

@@ -80,4 +80,8 @@ public class User extends TimeEntity {
     public void conversePushChk() {
         this.pushChk = !this.pushChk;
     }
+
+    public void updateToken(String token) {
+        this.token = token;
+    }
 }

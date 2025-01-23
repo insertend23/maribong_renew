@@ -1,6 +1,7 @@
 package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.UserCountDTO;
+import com.navangs.maribong.dto.UserLoginDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class UserController {
     @PostMapping(value = "userInsert")
     public void userInsert(UserRegisterDTO userRegisterDTO) {
         userService.addUser(userRegisterDTO);
+    }
+
+    @PostMapping(value = "login")
+    public void login(UserLoginDTO userLoginDTO) {
+        userService.login(userLoginDTO);
     }
 }
