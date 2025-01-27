@@ -3,8 +3,8 @@ package com.navangs.maribong.service;
 import com.navangs.maribong.domain.User;
 import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
-import com.navangs.maribong.dto.UserDTO;
 import com.navangs.maribong.dto.UserLoginDTO;
+import com.navangs.maribong.dto.UserModifyDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import java.util.List;
@@ -25,7 +25,7 @@ public interface UserService {
 
     void deleteProfile(String userId);
 
-    User modifyUserInfo(UserDTO userDTO);
+    User modifyUserInfo(UserModifyDTO userDTO);
 
     Boolean switchPushChk(String userId);
 

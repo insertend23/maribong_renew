@@ -2,6 +2,7 @@ package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.UserCountDTO;
 import com.navangs.maribong.dto.UserLoginDTO;
+import com.navangs.maribong.dto.UserModifyDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.service.UserService;
@@ -52,5 +53,10 @@ public class UserController {
     @PostMapping(value = "userDeleteProfile")
     public void deleteUserProfile(String userId) {
         userService.deleteProfile(userId);
+    }
+
+    @PostMapping(value = "userUpdateInfo")
+    public void updateUserInfo(UserModifyDTO userModifyDTO) {
+        userService.modifyUserInfo(userModifyDTO);
     }
 }

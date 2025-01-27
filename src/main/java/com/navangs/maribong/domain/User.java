@@ -1,6 +1,7 @@
 package com.navangs.maribong.domain;
 
 import com.navangs.maribong.dto.UserDTO;
+import com.navangs.maribong.dto.UserModifyDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -75,6 +76,14 @@ public class User extends TimeEntity {
 
     public void changeProfile(String profile) {
         this.profile = profile;
+    }
+
+    public void changeUserInfo(UserModifyDTO dto) {
+        this.name = dto.getUserName();
+        this.pwd = dto.getUserPwd();
+        this.birthYear = dto.getBirthYear();
+        this.birthMonth = dto.getBirthMonth();
+        this.pushChk = dto.isPushChk();
     }
 
     public void conversePushChk() {

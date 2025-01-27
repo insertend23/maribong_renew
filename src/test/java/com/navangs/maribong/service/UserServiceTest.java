@@ -8,6 +8,7 @@ import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserDTO;
 import com.navangs.maribong.dto.UserLoginDTO;
+import com.navangs.maribong.dto.UserModifyDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
@@ -242,26 +243,34 @@ class UserServiceTest {
 
     @Test
     void modifyUserInfo() {
-        UserDTO modifiedUserDTO = UserDTO.builder().build();
-        BeanUtils.copyProperties(testUserDTO, modifiedUserDTO);
-        modifiedUserDTO.setName("modifytest");
-        modifiedUserDTO.setPwd("testtest2");
-        User user = User.fromDTO(testUserDTO);
+        UserModifyDTO modifiedUserDTO = UserModifyDTO.builder()
+            .userId(testUserDTO.getId())
+            .userName("modifytest")
+            .userPwd("testtest2")
+            .build();
+        User originUser = User.fromDTO(testUserDTO);
+        User modifiedUser = User.fromDTO(testUserDTO);
+        modifiedUser.changeUserInfo(modifiedUserDTO);
 
-        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
-        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(User.fromDTO(modifiedUserDTO));
-        User modifiedUser = userService.modifyUserInfo(modifiedUserDTO);
+        Mockito.when(userRepository.findById(modifiedUserDTO.getUserId())).thenReturn(Optional.of(originUser));
+        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(modifiedUser);
+        User savedUser = userService.modifyUserInfo(modifiedUserDTO);
 
-        Assertions.assertThat(modifiedUser.getName()).isEqualTo(modifiedUserDTO.getName());
-        Assertions.assertThat(modifiedUser.getPwd()).isEqualTo(modifiedUserDTO.getPwd());
+        Assertions.assertThat(savedUser.getName()).isEqualTo(modifiedUserDTO.getUserName());
+        Assertions.assertThat(savedUser.getPwd()).isEqualTo(modifiedUserDTO.getUserPwd());
         Mockito.verify(userRepository).save(Mockito.any(User.class));
     }
 
     @Test
     void modifyUserInfoNotFound() {
-        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.empty());
+        UserModifyDTO modifiedUserDTO = UserModifyDTO.builder()
+            .userId("wrong_id")
+            .userName("modifytest")
+            .userPwd("testtest2")
+            .build();
+        Mockito.when(userRepository.findById(modifiedUserDTO.getUserId())).thenReturn(Optional.empty());
 
-        Assertions.assertThatThrownBy(() -> userService.modifyUserInfo(testUserDTO))
+        Assertions.assertThatThrownBy(() -> userService.modifyUserInfo(modifiedUserDTO))
             .isInstanceOf(UserIdNotFoundException.class);
     }
 

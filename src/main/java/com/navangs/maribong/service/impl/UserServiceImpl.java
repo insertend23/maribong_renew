@@ -5,8 +5,8 @@ import com.navangs.maribong.domain.Notification;
 import com.navangs.maribong.domain.User;
 import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
-import com.navangs.maribong.dto.UserDTO;
 import com.navangs.maribong.dto.UserLoginDTO;
+import com.navangs.maribong.dto.UserModifyDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
@@ -118,11 +118,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User modifyUserInfo(UserDTO userDTO) {
-        validateAndGetUserEntity(userDTO.getId());
-        User updateUser = User.fromDTO(userDTO);
-
-        return userRepository.save(updateUser);
+    public User modifyUserInfo(UserModifyDTO userDTO) {
+        User user = validateAndGetUserEntity(userDTO.getUserId());
+        user.changeUserInfo(userDTO);
+        return userRepository.save(user);
     }
 
     @Override
