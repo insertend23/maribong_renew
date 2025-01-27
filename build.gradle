@@ -33,6 +33,7 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation 'net.coobird:thumbnailator:0.4.20'
     mockitoAgent('org.mockito:mockito-core') {
         transitive = false
     }

@@ -19,12 +19,16 @@ import com.navangs.maribong.repository.PostRepository;
 import com.navangs.maribong.repository.UserRepository;
 import com.navangs.maribong.service.UserService;
 import jakarta.transaction.Transactional;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,11 +93,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateProfile(String userId, MultipartFile profile) {
         User user = validateAndGetUserEntity(userId);
-        String randomProfileName = UUID.randomUUID().toString();
+
+        String savedProfileName = user.getProfile();
+        deleteProfileImage(savedProfileName);
+
+        String profileExtension = StringUtils.getFilenameExtension(profile.getOriginalFilename());
+        String randomProfileName = String.join(".", UUID.randomUUID().toString(), profileExtension);
         user.changeProfile(randomProfileName);
         userRepository.save(user);
-
-        uploadFile(profile, randomProfileName);
+        uploadProfileImage(profile, randomProfileName);
     }
 
     @Override
@@ -161,14 +169,33 @@ public class UserServiceImpl implements UserService {
         return savedUser;
     }
 
-    private void uploadFile(MultipartFile profile, String randomProfileName) {
-        String fileExtension = StringUtils.getFilenameExtension(profile.getOriginalFilename());
-        String fileName = randomProfileName + "." + fileExtension;
-        Path uploadPath = Path.of(PROFILE_UPLOAD_PATH + fileName).toAbsolutePath();
-        try {
-            profile.transferTo(uploadPath);
+    private void deleteProfileImage(String savedProfileName) {
+        if (savedProfileName == null) {
+            return;
+        }
+        Path savedPath = Path.of(PROFILE_UPLOAD_PATH + savedProfileName);
+        File savedProfileFile = savedPath.toFile();
+        if (savedProfileFile.exists()) {
+            savedProfileFile.delete();
+        }
+    }
+
+    private void uploadProfileImage(MultipartFile profile, String randomProfileName) {
+        Path uploadPath = Path.of(PROFILE_UPLOAD_PATH + randomProfileName).toAbsolutePath();
+        try (OutputStream profileOs = new FileOutputStream(uploadPath.toFile())) {
+            resizeProfileImage(profile, profileOs);
         } catch (IOException e) {
             throw new FileTransferFailedException();
+        }
+    }
+
+    private void resizeProfileImage(MultipartFile profile, OutputStream profileOs) {
+        try {
+            Thumbnails.of(profile.getInputStream())
+                .size(200, 200)
+                .toOutputStream(profileOs);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
