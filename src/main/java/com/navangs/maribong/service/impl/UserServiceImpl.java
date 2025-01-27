@@ -106,12 +106,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String deleteProfile(String userId) {
+    public void deleteProfile(String userId) {
         User user = validateAndGetUserEntity(userId);
-        user.changeProfile(null);
-        User savedUser = userRepository.save(user);
 
-        return savedUser.getProfile();
+        String savedProfileName = user.getProfile();
+        deleteProfileImage(savedProfileName);
+
+        user.changeProfile(null);
+        userRepository.save(user);
     }
 
     @Override

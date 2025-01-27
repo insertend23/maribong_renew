@@ -229,7 +229,6 @@ class UserServiceTest {
         Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(User.fromDTO(deleteProfileUserDTO));
 
-        Assertions.assertThat(userService.deleteProfile(testUserDTO.getId())).isNull();
         Mockito.verify(userRepository).save(Mockito.any(User.class));
     }
 

@@ -23,7 +23,7 @@ public interface UserService {
 
     void updateProfile(String userId, MultipartFile profile);
 
-    String deleteProfile(String userId);
+    void deleteProfile(String userId);
 
     User modifyUserInfo(UserDTO userDTO);
 
