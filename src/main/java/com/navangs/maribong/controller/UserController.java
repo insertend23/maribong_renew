@@ -1,5 +1,6 @@
 package com.navangs.maribong.controller;
 
+import com.navangs.maribong.dto.HistoryDTO;
 import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserCountDTO;
 import com.navangs.maribong.dto.UserLoginDTO;
@@ -65,5 +66,10 @@ public class UserController {
     @RequestMapping(value = "getAlerm", method = {RequestMethod.GET, RequestMethod.POST})
     public List<NotificationDTO> getAlerm(String userId) {
         return userService.getNotification(userId);
+    }
+
+    @RequestMapping(value = "getHistory", method = {RequestMethod.GET, RequestMethod.POST})
+    public List<HistoryDTO> getHistory(String userId) {
+        return userService.getHistory(userId);
     }
 }
