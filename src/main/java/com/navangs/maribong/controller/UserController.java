@@ -1,11 +1,13 @@
 package com.navangs.maribong.controller;
 
+import com.navangs.maribong.dto.NotificationDTO;
 import com.navangs.maribong.dto.UserCountDTO;
 import com.navangs.maribong.dto.UserLoginDTO;
 import com.navangs.maribong.dto.UserModifyDTO;
 import com.navangs.maribong.dto.UserMyPageDTO;
 import com.navangs.maribong.dto.UserRegisterDTO;
 import com.navangs.maribong.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,5 +60,10 @@ public class UserController {
     @PostMapping(value = "userUpdateInfo")
     public void updateUserInfo(UserModifyDTO userModifyDTO) {
         userService.modifyUserInfo(userModifyDTO);
+    }
+
+    @RequestMapping(value = "getAlerm", method = {RequestMethod.GET, RequestMethod.POST})
+    public List<NotificationDTO> getAlerm(String userId) {
+        return userService.getNotification(userId);
     }
 }
