@@ -48,4 +48,9 @@ public class UserController {
     public void updateUserProfile(@RequestPart("userId") String userId, @RequestPart("file") MultipartFile file) {
         userService.updateProfile(userId, file);
     }
+
+    @PostMapping(value = "userDeleteProfile")
+    public void deleteUserProfile(String userId) {
+        userService.deleteProfile(userId);
+    }
 }
