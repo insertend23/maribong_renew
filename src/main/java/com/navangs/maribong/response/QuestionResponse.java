@@ -3,13 +3,11 @@ package com.navangs.maribong.response;
 import com.navangs.maribong.dto.QuestionDTO;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Builder;
-import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Builder
-public class QuestionResponse {
-    private String result;
+
+@SuperBuilder
+public class QuestionResponse extends BaseResponse {
     private String resultMsg;
     private List<QuestionDTO> list;
 
