@@ -3,11 +3,14 @@ package com.navangs.maribong.service.impl;
 import com.navangs.maribong.domain.Question;
 import com.navangs.maribong.domain.UserQuiz;
 import com.navangs.maribong.dto.QuestionDTO;
+import com.navangs.maribong.dto.QuizAnswerDTO;
 import com.navangs.maribong.repository.QuestionRepository;
 import com.navangs.maribong.repository.QuizRepository;
 import com.navangs.maribong.repository.UserQuizRepository;
 import com.navangs.maribong.service.QuizService;
+import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +38,23 @@ public class QuizServiceImpl implements QuizService {
         return questions.stream()
             .map(QuestionDTO::fromEntity)
             .toList();
+    }
+
+    @Override
+    @Transactional
+    public Boolean sendAnswer(QuizAnswerDTO quizAnswerDTO) {
+        List<Question> questions = questionRepository.findQuestionsByQuizId(quizAnswerDTO.getQuizNo());
+
+        Boolean isPassed = IntStream.range(0, questions.size())
+            .allMatch(index -> questions.get(index).getAnswer().equals(quizAnswerDTO.getAnswer().get(index)));
+
+        if (isPassed) {
+            UserQuiz userQuiz = userQuizRepository.findFirstById_UserIdAndPassYn(quizAnswerDTO.getUserId(), true);
+            userQuiz.pass();
+
+            userQuizRepository.save(userQuiz);
+        }
+
+        return isPassed;
     }
 }

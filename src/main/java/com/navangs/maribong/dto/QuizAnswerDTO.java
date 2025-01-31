@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class QuizAnswerDTO {
-    String quizNo;
+    Long quizNo;
     String userId;
     List<String> answer;
 }

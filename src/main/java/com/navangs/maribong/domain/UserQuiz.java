@@ -43,4 +43,8 @@ public class UserQuiz {
     @Column(name = "pass_yn", columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
     private Boolean passYn;
+
+    public void pass() {
+        this.passYn = true;
+    }
 }
