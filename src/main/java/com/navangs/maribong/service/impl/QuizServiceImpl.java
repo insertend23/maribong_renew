@@ -5,7 +5,6 @@ import com.navangs.maribong.domain.UserQuiz;
 import com.navangs.maribong.dto.QuestionDTO;
 import com.navangs.maribong.dto.QuizAnswerDTO;
 import com.navangs.maribong.repository.QuestionRepository;
-import com.navangs.maribong.repository.QuizRepository;
 import com.navangs.maribong.repository.UserQuizRepository;
 import com.navangs.maribong.service.QuizService;
 import jakarta.transaction.Transactional;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class QuizServiceImpl implements QuizService {
-    private final QuizRepository quizRepository;
     private final QuestionRepository questionRepository;
     private final UserQuizRepository userQuizRepository;
 
