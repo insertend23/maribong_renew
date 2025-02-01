@@ -14,6 +14,7 @@ public class QuestionDTO {
     private String questionContent;
     private List<Choice> choiceList;
 
+    @Data
     @Builder
     static class Choice {
         private Long choiceNo;
