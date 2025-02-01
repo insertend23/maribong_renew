@@ -39,7 +39,6 @@ import org.springframework.mock.web.MockMultipartFile;
 class UserServiceTest {
     private static UserDTO testUserDTO;
     private static UserRegisterDTO testUserRegisterDTO;
-    private static UserMyPageDTO userMyPageDTO;
 
     @Mock
     private UserRepository userRepository;
@@ -97,9 +96,9 @@ class UserServiceTest {
     void getUserCount() {
         Long testCount = 10L;
 
-        Mockito.when(userRepository.count()).thenReturn(10L);
+        Mockito.when(userRepository.count()).thenReturn(testCount);
 
-        Assertions.assertThat(userService.getUserCount()).isEqualTo(10L);
+        Assertions.assertThat(userService.getUserCount()).isEqualTo(testCount);
     }
 
     @Test
