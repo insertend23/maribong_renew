@@ -2,16 +2,19 @@ package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.user.HistoryDTO;
 import com.navangs.maribong.dto.user.NotificationDTO;
-import com.navangs.maribong.dto.user.UserCountDTO;
 import com.navangs.maribong.dto.user.UserLoginDTO;
 import com.navangs.maribong.dto.user.UserModifyDTO;
 import com.navangs.maribong.dto.user.UserMyPageDTO;
 import com.navangs.maribong.dto.user.UserRegisterDTO;
+import com.navangs.maribong.response.BaseResponse;
+import com.navangs.maribong.response.UserCountResponse;
 import com.navangs.maribong.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -22,54 +25,69 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RequestMapping(value = "/user")
 public class UserController {
+    private static final BaseResponse SUCCESS_CODE_RESPONSE = new BaseResponse("100");
     private final UserService userService;
+    @Value("${prop.host-url}")
+    private String HOST_URL;
 
     @RequestMapping(value = "getUserCount", method = {RequestMethod.GET, RequestMethod.POST})
-    public UserCountDTO getUserCount() {
+    public UserCountResponse getUserCount() {
         Long count = userService.getUserCount();
 
-        return UserCountDTO.builder()
+        return UserCountResponse.builder()
             .count(count)
             .build();
     }
 
     @PostMapping(value = "userInsert")
-    public void userInsert(UserRegisterDTO userRegisterDTO) {
+    public BaseResponse userInsert(@RequestBody UserRegisterDTO userRegisterDTO) {
         userService.addUser(userRegisterDTO);
+
+        return SUCCESS_CODE_RESPONSE;
     }
 
     @PostMapping(value = "login")
-    public void login(UserLoginDTO userLoginDTO) {
+    public BaseResponse login(@RequestBody UserLoginDTO userLoginDTO) {
         userService.login(userLoginDTO);
+
+        return SUCCESS_CODE_RESPONSE;
     }
 
     @RequestMapping(value = "getUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
-    public UserMyPageDTO getUserInfo(String userId) {
+    public UserMyPageDTO getUserInfo(@RequestBody String userId) {
         return userService.getUserInfo(userId);
     }
 
     @PostMapping(value = "userUpdateProfile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updateUserProfile(@RequestPart("userId") String userId, @RequestPart("file") MultipartFile file) {
-        userService.updateProfile(userId, file);
+    public BaseResponse updateUserProfile(@RequestPart("userId") String userId,
+                                          @RequestPart("file") MultipartFile file) {
+        String profileName = userService.updateProfile(userId, file);
+        String profileUrl = HOST_URL + "/profile/" + profileName;
+
+        return new BaseResponse(profileUrl);
     }
 
     @PostMapping(value = "userDeleteProfile")
-    public void deleteUserProfile(String userId) {
+    public BaseResponse deleteUserProfile(@RequestBody String userId) {
         userService.deleteProfile(userId);
+
+        return new BaseResponse("success");
     }
 
     @PostMapping(value = "userUpdateInfo")
-    public void updateUserInfo(UserModifyDTO userModifyDTO) {
+    public BaseResponse updateUserInfo(@RequestBody UserModifyDTO userModifyDTO) {
         userService.modifyUserInfo(userModifyDTO);
+
+        return SUCCESS_CODE_RESPONSE;
     }
 
     @RequestMapping(value = "getAlerm", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<NotificationDTO> getAlerm(String userId) {
+    public List<NotificationDTO> getAlerm(@RequestBody String userId) {
         return userService.getNotification(userId);
     }
 
     @RequestMapping(value = "getHistory", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<HistoryDTO> getHistory(String userId) {
+    public List<HistoryDTO> getHistory(@RequestBody String userId) {
         return userService.getHistory(userId);
     }
 }

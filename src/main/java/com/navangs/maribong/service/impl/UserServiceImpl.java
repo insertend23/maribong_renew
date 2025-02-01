@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateProfile(String userId, MultipartFile profile) {
+    public String updateProfile(String userId, MultipartFile profile) {
         User user = validateAndGetUserEntity(userId);
 
         String savedProfileName = user.getProfile();
@@ -96,6 +96,8 @@ public class UserServiceImpl implements UserService {
         user.changeProfile(randomProfileName);
         userRepository.save(user);
         imageService.uploadImage(profile, randomProfileName);
+
+        return randomProfileName;
     }
 
     @Override

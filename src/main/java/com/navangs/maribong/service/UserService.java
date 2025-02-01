@@ -21,7 +21,7 @@ public interface UserService {
 
     String getProfile(String userId);
 
-    void updateProfile(String userId, MultipartFile profile);
+    String updateProfile(String userId, MultipartFile profile);
 
     void deleteProfile(String userId);
 

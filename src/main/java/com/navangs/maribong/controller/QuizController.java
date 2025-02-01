@@ -8,6 +8,7 @@ import com.navangs.maribong.service.QuizService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class QuizController {
     private final QuizService quizService;
 
     @RequestMapping(value = "getQuiz", method = {RequestMethod.GET, RequestMethod.POST})
-    public QuestionResponse getQuiz(String userId) {
+    public QuestionResponse getQuiz(@RequestBody String userId) {
         Long quizId = quizService.getAssignedQuizId(userId);
 
         if (quizId != null) {
@@ -35,7 +36,7 @@ public class QuizController {
     }
 
     @PostMapping(value = "sendQuiz")
-    public BaseResponse sendQuiz(QuizAnswerDTO quizAnswerDTO) {
+    public BaseResponse sendQuiz(@RequestBody QuizAnswerDTO quizAnswerDTO) {
         Boolean isPassed = quizService.sendAnswer(quizAnswerDTO);
         if (isPassed) {
             return BaseResponse.builder()
