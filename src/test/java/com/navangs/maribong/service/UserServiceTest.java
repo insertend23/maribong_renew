@@ -12,6 +12,7 @@ import com.navangs.maribong.entity.user.Notification;
 import com.navangs.maribong.entity.user.NotificationId;
 import com.navangs.maribong.entity.user.User;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
+import com.navangs.maribong.exception.FileTransferFailedException;
 import com.navangs.maribong.exception.UserIdNotFoundException;
 import com.navangs.maribong.exception.UserPasswordIncorrectException;
 import com.navangs.maribong.repository.post.PostRepository;
@@ -31,6 +32,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -49,6 +52,9 @@ class UserServiceTest {
 
     @Mock
     private HistoryRepository historyRepository;
+
+    @Mock
+    private ImageService imageService;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -197,28 +203,53 @@ class UserServiceTest {
             .isInstanceOf(UserIdNotFoundException.class);
     }
 
-    //    @Test
-    //    void updateProfile() {
-    //        UserDTO updateProfileUserDTO = UserDTO.builder().build();
-    //        BeanUtils.copyProperties(testUserDTO, updateProfileUserDTO);
-    //        updateProfileUserDTO.setProfile("test_profile2");
-    //        User user = User.fromDTO(testUserDTO);
-    //
-    //        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
-    //        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(User.fromDTO(updateProfileUserDTO));
-    //
-    //        Assertions.assertThat(userService.updateProfile(testUserDTO.getId(), "test_profile2"))
-    //            .isEqualTo(updateProfileUserDTO.getProfile());
-    //        Mockito.verify(userRepository).save(Mockito.any(User.class));
-    //    }
-    //
-    //    @Test
-    //    void updateProfileNotFound() {
-    //        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.empty());
-    //
-    //        Assertions.assertThatThrownBy(() -> userService.updateProfile(testUserDTO.getId(), "test_profile"))
-    //            .isInstanceOf(UserIdNotFoundException.class);
-    //    }
+    @Test
+    void updateProfile() {
+        MockMultipartFile testProfileFile = new MockMultipartFile(
+            "테스트 이미지",
+            "test_image.png",
+            MediaType.IMAGE_PNG_VALUE,
+            "test_image".getBytes()
+        );
+        User user = User.fromDTO(testUserDTO);
+        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
+
+        userService.updateProfile(testUserDTO.getId(), testProfileFile);
+
+        Assertions.assertThat(user.getProfile()).isNotEqualTo(testUserDTO.getProfile());
+        Mockito.verify(userRepository).save(Mockito.any(User.class));
+    }
+
+    @Test
+    void updateProfileFileTransferError() {
+        MockMultipartFile testProfileFile = new MockMultipartFile(
+            "테스트 이미지",
+            "test_image.png",
+            MediaType.IMAGE_PNG_VALUE,
+            "test_image".getBytes()
+        );
+        User user = User.fromDTO(testUserDTO);
+        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
+        Mockito.doThrow(FileTransferFailedException.class).when(imageService)
+            .uploadImage(Mockito.any(MockMultipartFile.class), Mockito.anyString());
+
+        Assertions.assertThatThrownBy(() -> userService.updateProfile(testUserDTO.getId(), testProfileFile))
+            .isInstanceOf(FileTransferFailedException.class);
+    }
+
+    @Test
+    void updateProfileNotFound() {
+        MockMultipartFile testProfileFile = new MockMultipartFile(
+            "테스트 이미지",
+            "test_image.png",
+            MediaType.IMAGE_PNG_VALUE,
+            "test_image".getBytes()
+        );
+        Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.empty());
+
+        Assertions.assertThatThrownBy(() -> userService.updateProfile(testUserDTO.getId(), testProfileFile))
+            .isInstanceOf(UserIdNotFoundException.class);
+    }
 
     @Test
     void deleteProfile() {
@@ -226,9 +257,10 @@ class UserServiceTest {
         BeanUtils.copyProperties(testUserDTO, deleteProfileUserDTO);
         deleteProfileUserDTO.setProfile(null);
         User user = User.fromDTO(testUserDTO);
-
         Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(User.fromDTO(deleteProfileUserDTO));
+
+        userService.deleteProfile(testUserDTO.getId());
 
         Mockito.verify(userRepository).save(Mockito.any(User.class));
     }
