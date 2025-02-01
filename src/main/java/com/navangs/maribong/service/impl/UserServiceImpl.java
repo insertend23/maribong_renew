@@ -10,25 +10,19 @@ import com.navangs.maribong.entity.user.History;
 import com.navangs.maribong.entity.user.Notification;
 import com.navangs.maribong.entity.user.User;
 import com.navangs.maribong.exception.DuplicatedUserIdException;
-import com.navangs.maribong.exception.FileTransferFailedException;
 import com.navangs.maribong.exception.UserIdNotFoundException;
 import com.navangs.maribong.exception.UserPasswordIncorrectException;
 import com.navangs.maribong.repository.post.PostRepository;
 import com.navangs.maribong.repository.user.HistoryRepository;
 import com.navangs.maribong.repository.user.NotificationRepository;
 import com.navangs.maribong.repository.user.UserRepository;
+import com.navangs.maribong.service.ImageService;
 import com.navangs.maribong.service.UserService;
 import jakarta.transaction.Transactional;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,11 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private static final String PROFILE_UPLOAD_PATH = "./src/main/uploads/profile/";
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final NotificationRepository notificationRepository;
     private final HistoryRepository historyRepository;
+    private final ImageService imageService;
 
     @Override
     @Transactional
@@ -95,13 +89,13 @@ public class UserServiceImpl implements UserService {
         User user = validateAndGetUserEntity(userId);
 
         String savedProfileName = user.getProfile();
-        deleteProfileImage(savedProfileName);
+        imageService.deleteImage(savedProfileName);
 
         String profileExtension = StringUtils.getFilenameExtension(profile.getOriginalFilename());
         String randomProfileName = String.join(".", UUID.randomUUID().toString(), profileExtension);
         user.changeProfile(randomProfileName);
         userRepository.save(user);
-        uploadProfileImage(profile, randomProfileName);
+        imageService.uploadImage(profile, randomProfileName);
     }
 
     @Override
@@ -110,7 +104,7 @@ public class UserServiceImpl implements UserService {
         User user = validateAndGetUserEntity(userId);
 
         String savedProfileName = user.getProfile();
-        deleteProfileImage(savedProfileName);
+        imageService.deleteImage(savedProfileName);
 
         user.changeProfile(null);
         userRepository.save(user);
@@ -168,35 +162,5 @@ public class UserServiceImpl implements UserService {
             throw new UserIdNotFoundException();
         }
         return savedUser;
-    }
-
-    private void deleteProfileImage(String savedProfileName) {
-        if (savedProfileName == null) {
-            return;
-        }
-        Path savedPath = Path.of(PROFILE_UPLOAD_PATH + savedProfileName);
-        File savedProfileFile = savedPath.toFile();
-        if (savedProfileFile.exists()) {
-            savedProfileFile.delete();
-        }
-    }
-
-    private void uploadProfileImage(MultipartFile profile, String randomProfileName) {
-        Path uploadPath = Path.of(PROFILE_UPLOAD_PATH + randomProfileName).toAbsolutePath();
-        try (OutputStream profileOs = new FileOutputStream(uploadPath.toFile())) {
-            resizeProfileImage(profile, profileOs);
-        } catch (IOException e) {
-            throw new FileTransferFailedException();
-        }
-    }
-
-    private void resizeProfileImage(MultipartFile profile, OutputStream profileOs) {
-        try {
-            Thumbnails.of(profile.getInputStream())
-                .size(200, 200)
-                .toOutputStream(profileOs);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
