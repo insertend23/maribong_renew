@@ -21,7 +21,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Long getAssignedQuizId(String userId) {
-        UserQuiz userQuiz = userQuizRepository.findFirstById_UserIdAndPassYn(userId, true);
+        UserQuiz userQuiz = getFirstUserQuizNotPassed(userId);
         if (userQuiz == null) {
             return null;
         }
@@ -47,12 +47,16 @@ public class QuizServiceImpl implements QuizService {
             .allMatch(index -> questions.get(index).getAnswer().equals(quizAnswerDTO.getAnswer().get(index)));
 
         if (isPassed) {
-            UserQuiz userQuiz = userQuizRepository.findFirstById_UserIdAndPassYn(quizAnswerDTO.getUserId(), true);
+            UserQuiz userQuiz = getFirstUserQuizNotPassed(quizAnswerDTO.getUserId());
             userQuiz.pass();
 
             userQuizRepository.save(userQuiz);
         }
 
         return isPassed;
+    }
+
+    private UserQuiz getFirstUserQuizNotPassed(String userId) {
+        return userQuizRepository.findFirstById_UserIdAndPassYn(userId, false);
     }
 }
