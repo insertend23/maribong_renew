@@ -1,12 +1,12 @@
 package com.navangs.maribong.controller;
 
-import com.navangs.maribong.dto.HistoryDTO;
-import com.navangs.maribong.dto.NotificationDTO;
-import com.navangs.maribong.dto.UserCountDTO;
-import com.navangs.maribong.dto.UserLoginDTO;
-import com.navangs.maribong.dto.UserModifyDTO;
-import com.navangs.maribong.dto.UserMyPageDTO;
-import com.navangs.maribong.dto.UserRegisterDTO;
+import com.navangs.maribong.dto.user.HistoryDTO;
+import com.navangs.maribong.dto.user.NotificationDTO;
+import com.navangs.maribong.dto.user.UserCountDTO;
+import com.navangs.maribong.dto.user.UserLoginDTO;
+import com.navangs.maribong.dto.user.UserModifyDTO;
+import com.navangs.maribong.dto.user.UserMyPageDTO;
+import com.navangs.maribong.dto.user.UserRegisterDTO;
 import com.navangs.maribong.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

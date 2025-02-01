@@ -1,7 +1,7 @@
 package com.navangs.maribong.controller;
 
-import com.navangs.maribong.dto.QuestionDTO;
-import com.navangs.maribong.dto.QuizAnswerDTO;
+import com.navangs.maribong.dto.quiz.QuestionDTO;
+import com.navangs.maribong.dto.quiz.QuizAnswerDTO;
 import com.navangs.maribong.response.BaseResponse;
 import com.navangs.maribong.response.QuestionResponse;
 import com.navangs.maribong.service.QuizService;

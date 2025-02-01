@@ -1,7 +1,8 @@
 package com.navangs.maribong.repository;
 
 import com.navangs.maribong.DataJpaCustomTest;
-import com.navangs.maribong.domain.Question;
+import com.navangs.maribong.entity.quiz.Question;
+import com.navangs.maribong.repository.quiz.QuestionRepository;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

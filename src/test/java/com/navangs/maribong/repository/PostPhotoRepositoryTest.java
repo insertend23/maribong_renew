@@ -1,7 +1,8 @@
 package com.navangs.maribong.repository;
 
 import com.navangs.maribong.DataJpaCustomTest;
-import com.navangs.maribong.domain.PostPhoto;
+import com.navangs.maribong.entity.post.PostPhoto;
+import com.navangs.maribong.repository.post.PostPhotoRepository;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package com.navangs.maribong.response;
 
-import com.navangs.maribong.dto.QuestionDTO;
+import com.navangs.maribong.dto.quiz.QuestionDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;

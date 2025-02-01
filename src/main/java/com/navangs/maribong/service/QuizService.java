@@ -1,7 +1,7 @@
 package com.navangs.maribong.service;
 
-import com.navangs.maribong.dto.QuestionDTO;
-import com.navangs.maribong.dto.QuizAnswerDTO;
+import com.navangs.maribong.dto.quiz.QuestionDTO;
+import com.navangs.maribong.dto.quiz.QuizAnswerDTO;
 import java.util.List;
 
 public interface QuizService {

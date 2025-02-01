@@ -1,12 +1,12 @@
 package com.navangs.maribong.service;
 
-import com.navangs.maribong.domain.Question;
-import com.navangs.maribong.domain.Quiz;
-import com.navangs.maribong.domain.UserQuiz;
-import com.navangs.maribong.dto.QuestionDTO;
-import com.navangs.maribong.dto.QuizAnswerDTO;
-import com.navangs.maribong.repository.QuestionRepository;
-import com.navangs.maribong.repository.UserQuizRepository;
+import com.navangs.maribong.dto.quiz.QuestionDTO;
+import com.navangs.maribong.dto.quiz.QuizAnswerDTO;
+import com.navangs.maribong.entity.quiz.Question;
+import com.navangs.maribong.entity.quiz.Quiz;
+import com.navangs.maribong.entity.quiz.UserQuiz;
+import com.navangs.maribong.repository.quiz.QuestionRepository;
+import com.navangs.maribong.repository.quiz.UserQuizRepository;
 import com.navangs.maribong.service.impl.QuizServiceImpl;
 import java.util.List;
 import org.assertj.core.api.Assertions;

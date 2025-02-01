@@ -1,12 +1,12 @@
 package com.navangs.maribong.service;
 
-import com.navangs.maribong.domain.User;
-import com.navangs.maribong.dto.HistoryDTO;
-import com.navangs.maribong.dto.NotificationDTO;
-import com.navangs.maribong.dto.UserLoginDTO;
-import com.navangs.maribong.dto.UserModifyDTO;
-import com.navangs.maribong.dto.UserMyPageDTO;
-import com.navangs.maribong.dto.UserRegisterDTO;
+import com.navangs.maribong.dto.user.HistoryDTO;
+import com.navangs.maribong.dto.user.NotificationDTO;
+import com.navangs.maribong.dto.user.UserLoginDTO;
+import com.navangs.maribong.dto.user.UserModifyDTO;
+import com.navangs.maribong.dto.user.UserMyPageDTO;
+import com.navangs.maribong.dto.user.UserRegisterDTO;
+import com.navangs.maribong.entity.user.User;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 

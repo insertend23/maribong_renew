@@ -1,7 +1,8 @@
 package com.navangs.maribong.repository;
 
 import com.navangs.maribong.DataJpaCustomTest;
-import com.navangs.maribong.domain.User;
+import com.navangs.maribong.entity.user.User;
+import com.navangs.maribong.repository.user.UserRepository;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
