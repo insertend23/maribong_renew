@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface UserQuizRepository extends JpaRepository<UserQuiz, UserQuizId> {
+    UserQuiz findFirstById_UserIdAndPassYn(String idUserId, Boolean passYn);
+
     List<UserQuiz> findById_UserId(String userId);
 
     @Query("SELECT uq.quiz FROM UserQuiz uq LEFT JOIN Quiz q ON uq.quiz.id = q.id WHERE uq.user.id = :userId")

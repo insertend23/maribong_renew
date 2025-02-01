@@ -54,4 +54,20 @@ class UserQuizRepositoryTest {
 
         Assertions.assertThat(quizzes).hasSize(0);
     }
+
+    @Test
+    void findFirstById_UserIdAndPassYn() {
+        UserQuiz userQuiz = userQuizRepository.findFirstById_UserIdAndPassYn("test", true);
+        Quiz quiz = userQuiz.getQuiz();
+
+        Assertions.assertThat(userQuiz).isNotNull();
+        Assertions.assertThat(quiz.getTitle()).isEqualTo("테스트 퀴즈2");
+    }
+
+    @Test
+    void findFirstById_UserIdAndPassYnNotFound() {
+        UserQuiz userQuiz = userQuizRepository.findFirstById_UserIdAndPassYn("test1", false);
+
+        Assertions.assertThat(userQuiz).isNull();
+    }
 }

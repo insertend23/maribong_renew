@@ -13,6 +13,13 @@ class QuestionRepositoryTest {
     private QuestionRepository questionRepository;
 
     @Test
+    void findQuestionsByQuizId() {
+        List<Question> questions = questionRepository.findQuestionsByQuizId(1L);
+
+        Assertions.assertThat(questions).hasSize(3);
+    }
+
+    @Test
     void findByQuizIdIn() {
         List<Long> quizIds = List.of(1L, 3L);
         List<Question> questions = questionRepository.findByQuizIdIn(quizIds);

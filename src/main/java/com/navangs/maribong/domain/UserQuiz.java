@@ -10,6 +10,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "user_quiz")
 @DynamicInsert
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,4 +43,8 @@ public class UserQuiz {
     @Column(name = "pass_yn", columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
     private Boolean passYn;
+
+    public void pass() {
+        this.passYn = true;
+    }
 }
