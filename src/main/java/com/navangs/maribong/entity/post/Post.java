@@ -1,5 +1,6 @@
 package com.navangs.maribong.entity.post;
 
+import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.entity.TimeEntity;
 import com.navangs.maribong.entity.user.User;
 import jakarta.persistence.Column;
@@ -53,4 +54,15 @@ public class Post extends TimeEntity {
     @Column(columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
     private Boolean mark;
+
+    public static Post fromWriteDTO(PostWriteDTO postWriteDTO, String reaction) {
+        return Post.builder()
+            .user(User.builder().id(postWriteDTO.getUserId()).build())
+            .content(postWriteDTO.getContent())
+            .country(postWriteDTO.getCountry())
+            .groupName(postWriteDTO.getGroupName())
+            .areaName(postWriteDTO.getAreaName())
+            .reaction(reaction)
+            .build();
+    }
 }

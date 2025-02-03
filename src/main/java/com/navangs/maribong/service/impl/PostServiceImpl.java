@@ -2,6 +2,7 @@ package com.navangs.maribong.service.impl;
 
 import com.navangs.maribong.dto.post.PostDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
+import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
 import com.navangs.maribong.entity.post.Post;
 import com.navangs.maribong.entity.post.PostPhoto;
@@ -40,6 +41,13 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = postRepository.findByUser_IdNotOrderByRegTimestampDesc(userId);
 
         return convertPostsToPostDTOs(posts, userId);
+    }
+
+    @Override
+    public void addPost(PostWriteDTO postWriteDTO) {
+        String reaction = "";
+        Post post = Post.fromWriteDTO(postWriteDTO, reaction);
+        postRepository.save(post);
     }
 
     @Override

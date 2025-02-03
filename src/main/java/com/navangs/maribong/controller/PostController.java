@@ -49,6 +49,8 @@ public class PostController {
 
     @RequestMapping(value = "insertCommunity")
     public BaseResponse addPost(@RequestBody PostWriteDTO postWriteDTO) {
+        postService.addPost(postWriteDTO);
+        
         return new BaseResponse("success");
     }
 
