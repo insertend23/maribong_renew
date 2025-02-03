@@ -19,4 +19,18 @@ class PostLikeRepositoryTest {
 
         Assertions.assertThat(likes).hasSize(2);
     }
+
+    @Test
+    void countByPostId() {
+        Long counts = postLikeRepository.countById_PostId(1L);
+
+        Assertions.assertThat(counts).isEqualTo(2L);
+    }
+
+    @Test
+    void existsByPostIdAndUserId() {
+        Boolean isLiked = postLikeRepository.existsById_PostIdAndId_UserId(1L, "test2");
+
+        Assertions.assertThat(isLiked).isTrue();
+    }
 }
