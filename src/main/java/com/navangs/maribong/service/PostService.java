@@ -8,5 +8,5 @@ import java.util.List;
 public interface PostService {
     List<PostDTO> getPosts(PostRequestDTO postRequestDTO);
 
-    List<List<ReplyDTO>> getReplies(List<Long> postIds);
+    List<List<ReplyDTO>> getReplies(List<Integer> postIds);
 }

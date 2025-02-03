@@ -14,7 +14,10 @@ import com.navangs.maribong.dto.post.ReplyModifyDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.response.BaseResponse;
 import com.navangs.maribong.response.PostResponse;
+import com.navangs.maribong.service.PostService;
 import java.util.List;
+import java.util.stream.IntStream;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -22,10 +25,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/community")
+@RequiredArgsConstructor
 public class PostController {
+    private final PostService postService;
+
     @RequestMapping(value = "getCommunityList")
-    public List<PostResponse> getPostList(@RequestBody PostRequestDTO postRequestDTO) {
-        return null;
+    public List<PostResponse> getPosts(@RequestBody PostRequestDTO postRequestDTO) {
+        List<PostDTO> posts = postService.getPosts(postRequestDTO);
+        List<Integer> postIds = posts.stream()
+            .map(PostDTO::getCommunityNo)
+            .toList();
+        List<List<ReplyDTO>> replies = postService.getReplies(postIds);
+
+        return IntStream.range(0, posts.size())
+            .mapToObj(index -> PostResponse.fromDTOs(posts.get(index), replies.get(index)))
+            .toList();
     }
 
     @RequestMapping(value = "getMyCommunityList")

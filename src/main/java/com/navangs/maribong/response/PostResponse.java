@@ -11,4 +11,11 @@ import lombok.Data;
 public class PostResponse {
     PostDTO sr;
     List<ReplyDTO> resultReplyList;
+
+    public static PostResponse fromDTOs(PostDTO postDTO, List<ReplyDTO> replyDTOList) {
+        return PostResponse.builder()
+            .sr(postDTO)
+            .resultReplyList(replyDTOList)
+            .build();
+    }
 }

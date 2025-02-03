@@ -36,8 +36,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<List<ReplyDTO>> getReplies(List<Long> postIds) {
+    public List<List<ReplyDTO>> getReplies(List<Integer> postIds) {
         return postIds.stream()
+            .map(Integer::longValue)
             .map(replyRepository::findByPost_Id)
             .map(replies -> replies.stream().map(ReplyDTO::fromEntity).toList())
             .toList();
