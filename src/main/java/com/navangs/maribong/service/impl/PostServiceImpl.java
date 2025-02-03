@@ -36,6 +36,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDTO> getMyPosts(String userId) {
+        List<Post> posts = postRepository.findByUser_IdNotOrderByRegTimestampDesc(userId);
+
+        return convertPostsToPostDTOs(posts, userId);
+    }
+
+    @Override
     public List<List<ReplyDTO>> getReplies(List<Integer> postIds) {
         return postIds.stream()
             .map(Integer::longValue)

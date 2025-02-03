@@ -44,7 +44,7 @@ public class PostController {
 
     @RequestMapping(value = "getMyCommunityList")
     public List<PostDTO> getMyPostList(@RequestBody String userId) {
-        return null;
+        return postService.getMyPosts(userId);
     }
 
     @RequestMapping(value = "insertCommunity")
