@@ -10,4 +10,8 @@ public class PostRequestDTO {
     String country;
     String group;
     String reaction;
+
+    public Boolean hasNoSearchOptions() {
+        return this.country.isEmpty() && this.group.isEmpty() && this.reaction.isEmpty();
+    }
 }

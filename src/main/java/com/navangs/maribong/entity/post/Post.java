@@ -52,5 +52,5 @@ public class Post extends TimeEntity {
 
     @Column(columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
-    private boolean mark;
+    private Boolean mark;
 }
