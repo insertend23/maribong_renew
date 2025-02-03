@@ -9,4 +9,6 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
     List<Reply> findByPost_Id(Long postId);
 
     List<Reply> findByPost_Id(Long postId, Limit limit);
+
+    Long countByPost_Id(Long postId);
 }
