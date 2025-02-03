@@ -2,6 +2,7 @@ package com.navangs.maribong.service.impl;
 
 import com.navangs.maribong.dto.post.PostDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
+import com.navangs.maribong.dto.post.ReplyDTO;
 import com.navangs.maribong.entity.post.Post;
 import com.navangs.maribong.entity.post.PostPhoto;
 import com.navangs.maribong.repository.post.PostLikeRepository;
@@ -32,6 +33,14 @@ public class PostServiceImpl implements PostService {
                 postRequestDTO.getCountry(), postRequestDTO.getGroup(), postRequestDTO.getReaction());
         }
         return convertPostsToPostDTOs(posts, postRequestDTO.getUserId());
+    }
+
+    @Override
+    public List<List<ReplyDTO>> getReplies(List<Long> postIds) {
+        return postIds.stream()
+            .map(replyRepository::findByPost_Id)
+            .map(replies -> replies.stream().map(ReplyDTO::fromEntity).toList())
+            .toList();
     }
 
     private List<PostDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
