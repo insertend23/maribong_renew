@@ -37,7 +37,4 @@ public class PostPhoto {
 
     @Column(nullable = false, unique = true)
     private String imgName;
-
-    @Column(nullable = false, unique = true)
-    private String imgPath;
 }
