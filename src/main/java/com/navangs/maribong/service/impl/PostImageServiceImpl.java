@@ -22,7 +22,7 @@ public class PostImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImage(String savedImageName) {
-        if (savedImageName == null) {
+        if (savedImageName == null || savedImageName.isEmpty()) {
             return;
         }
         Path savedPath = Path.of(POST_IMG_UPLOAD_PATH + savedImageName);

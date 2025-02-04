@@ -27,7 +27,7 @@ public class ProfileImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImage(String savedImageName) {
-        if (savedImageName == null) {
+        if (savedImageName == null || savedImageName.isEmpty()) {
             return;
         }
         Path savedPath = Path.of(PROFILE_UPLOAD_PATH + savedImageName);
