@@ -15,6 +15,7 @@ import com.navangs.maribong.service.PostService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,8 @@ public class PostServiceImpl implements PostService {
     private final PostPhotoRepository postPhotoRepository;
     private final ReplyRepository replyRepository;
     private final PostLikeRepository postLikeRepository;
-    private final ImageService postImageService;
+    @Qualifier("postImageServiceImpl")
+    private final ImageService imageService;
 
     @Override
     public List<PostDTO> getPosts(PostRequestDTO postRequestDTO) {
@@ -65,7 +67,7 @@ public class PostServiceImpl implements PostService {
             .imgName(randomImageName)
             .build();
         postPhotoRepository.save(photo);
-        postImageService.uploadImage(images, randomImageName);
+        imageService.uploadImage(images, randomImageName);
     }
 
     @Override

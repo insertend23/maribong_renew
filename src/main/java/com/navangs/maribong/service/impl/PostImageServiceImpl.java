@@ -5,8 +5,10 @@ import com.navangs.maribong.service.ImageService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+@Service
 public class PostImageServiceImpl implements ImageService {
     public static final String POST_IMG_UPLOAD_PATH = "./src/main/uploads/postimg";
 

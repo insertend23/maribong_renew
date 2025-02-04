@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final PostRepository postRepository;
     private final NotificationRepository notificationRepository;
     private final HistoryRepository historyRepository;
+    @Qualifier("profileImageServiceImpl")
     private final ImageService imageService;
 
     @Override
