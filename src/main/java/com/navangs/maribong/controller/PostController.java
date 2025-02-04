@@ -15,6 +15,7 @@ import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.response.BaseResponse;
 import com.navangs.maribong.response.PostResponse;
 import com.navangs.maribong.service.PostService;
+import com.navangs.maribong.service.ReviewModelRequestService;
 import java.util.List;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final ReviewModelRequestService reviewModelRequestService;
 
     @RequestMapping(value = "getCommunityList")
     public List<PostResponse> getPosts(@RequestBody PostRequestDTO postRequestDTO) {
@@ -49,8 +51,9 @@ public class PostController {
 
     @RequestMapping(value = "insertCommunity")
     public BaseResponse addPost(@RequestBody PostWriteDTO postWriteDTO) {
-        postService.addPost(postWriteDTO);
-        
+        String reaction = String.join(", ", reviewModelRequestService.getReaction(postWriteDTO.getContent()));
+        postService.addPost(postWriteDTO, reaction);
+
         return new BaseResponse("success");
     }
 

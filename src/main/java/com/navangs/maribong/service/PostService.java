@@ -11,7 +11,7 @@ public interface PostService {
 
     List<PostDTO> getMyPosts(String userId);
 
-    void addPost(PostWriteDTO postWriteDTO);
+    void addPost(PostWriteDTO postWriteDTO, String reaction);
 
     List<List<ReplyDTO>> getReplies(List<Integer> postIds);
 }

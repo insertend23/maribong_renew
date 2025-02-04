@@ -44,8 +44,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void addPost(PostWriteDTO postWriteDTO) {
-        String reaction = "";
+    public void addPost(PostWriteDTO postWriteDTO, String reaction) {
         Post post = Post.fromWriteDTO(postWriteDTO, reaction);
         postRepository.save(post);
     }
