@@ -19,10 +19,12 @@ import com.navangs.maribong.service.ReviewModelRequestService;
 import java.util.List;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/community")
@@ -49,10 +51,11 @@ public class PostController {
         return postService.getMyPosts(userId);
     }
 
-    @RequestMapping(value = "insertCommunity")
-    public BaseResponse addPost(@RequestBody PostWriteDTO postWriteDTO) {
+    @RequestMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public BaseResponse addPost(@RequestPart(name = "file") List<MultipartFile> images,
+                                @RequestPart PostWriteDTO postWriteDTO) {
         String reaction = String.join(", ", reviewModelRequestService.getReaction(postWriteDTO.getContent()));
-        postService.addPost(postWriteDTO, reaction);
+        postService.addPost(images, postWriteDTO, reaction);
 
         return new BaseResponse("success");
     }

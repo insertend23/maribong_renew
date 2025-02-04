@@ -10,10 +10,14 @@ import com.navangs.maribong.repository.post.PostLikeRepository;
 import com.navangs.maribong.repository.post.PostPhotoRepository;
 import com.navangs.maribong.repository.post.PostRepository;
 import com.navangs.maribong.repository.post.ReplyRepository;
+import com.navangs.maribong.service.ImageService;
 import com.navangs.maribong.service.PostService;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class PostServiceImpl implements PostService {
     private final PostPhotoRepository postPhotoRepository;
     private final ReplyRepository replyRepository;
     private final PostLikeRepository postLikeRepository;
+    private final ImageService postImageService;
 
     @Override
     public List<PostDTO> getPosts(PostRequestDTO postRequestDTO) {
@@ -44,9 +49,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void addPost(PostWriteDTO postWriteDTO, String reaction) {
+    public void addPost(List<MultipartFile> images, PostWriteDTO postWriteDTO, String reaction) {
         Post post = Post.fromWriteDTO(postWriteDTO, reaction);
-        postRepository.save(post);
+        Post savedPost = postRepository.save(post);
+        images.forEach(image -> addPostImage(image, savedPost));
+    }
+
+    @Override
+    public void addPostImage(MultipartFile images, Post post) {
+        String imageExtension = StringUtils.getFilenameExtension(images.getOriginalFilename());
+        String randomImageName = String.join(".", UUID.randomUUID().toString(), imageExtension);
+        PostPhoto photo = PostPhoto.builder()
+            .post(post)
+            .originName(images.getOriginalFilename())
+            .imgName(randomImageName)
+            .build();
+        postPhotoRepository.save(photo);
+        postImageService.uploadImage(images, randomImageName);
     }
 
     @Override
