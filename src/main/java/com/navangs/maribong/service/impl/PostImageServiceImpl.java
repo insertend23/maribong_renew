@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PostImageServiceImpl implements ImageService {
-    public static final String POST_IMG_UPLOAD_PATH = "./src/main/uploads/postimg";
+    public static final String POST_IMG_UPLOAD_PATH = "./src/main/uploads/postimg/";
 
     @Override
     public void uploadImage(MultipartFile image, String imageName) {
