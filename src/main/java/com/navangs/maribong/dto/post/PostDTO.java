@@ -42,7 +42,7 @@ public class PostDTO {
             .groupName(post.getGroupName())
             .areaName(post.getAreaName())
             .reaction(post.getReaction())
-            .mark(post.getMark() ? "y" : "n")
+            .mark(post.getMark() ? "y" : null)
             .photoPaths(getPostImgPaths(postPhotos))
             .photoCount(postPhotos.size())
             .replyCount(replyCount)

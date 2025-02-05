@@ -9,12 +9,12 @@ import lombok.Data;
 public class UserMyPageDTO {
     private String userId;
     private String userName;
-    private String gender;
+    private String sex;
     private Integer birthYear;
     private Integer birthMonth;
     private String profile;
-    private Boolean pushChk;
-    private Long postCount;
+    private String pushCheck;
+    private Long cmCnt;
 
     public static UserMyPageDTO fromEntity(User user, Long postCount) {
         String genderLetter = user.getGender().equals('M') ? "남자" : "여자";
@@ -23,12 +23,12 @@ public class UserMyPageDTO {
         return UserMyPageDTO.builder()
             .userId(user.getId())
             .userName(user.getName())
-            .gender(genderLetter)
+            .sex(genderLetter)
             .birthYear(user.getBirthYear())
             .birthMonth(user.getBirthMonth())
             .profile(profileUrlBase + user.getProfile())
-            .pushChk(user.getPushChk())
-            .postCount(postCount)
+            .pushCheck(user.getPushChk() ? "1" : "0")
+            .cmCnt(postCount)
             .build();
     }
 }
