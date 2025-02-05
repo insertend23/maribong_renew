@@ -2,6 +2,7 @@ package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.quiz.QuestionDTO;
 import com.navangs.maribong.dto.quiz.QuizAnswerDTO;
+import com.navangs.maribong.dto.user.UserIdRequestDTO;
 import com.navangs.maribong.response.BaseResponse;
 import com.navangs.maribong.response.QuestionResponse;
 import com.navangs.maribong.service.QuizService;
@@ -23,8 +24,8 @@ public class QuizController {
     private final QuizService quizService;
 
     @RequestMapping(value = "getQuiz", method = {RequestMethod.GET, RequestMethod.POST})
-    public QuestionResponse getQuiz(@RequestBody String userId) {
-        Long quizId = quizService.getAssignedQuizId(userId);
+    public QuestionResponse getQuiz(@RequestBody UserIdRequestDTO userIdDTO) {
+        Long quizId = quizService.getAssignedQuizId(userIdDTO.getUserId());
 
         if (quizId != null) {
             List<QuestionDTO> questions = quizService.getQuestions(quizId);

@@ -12,6 +12,7 @@ import com.navangs.maribong.dto.post.ReplyDeleteDTO;
 import com.navangs.maribong.dto.post.ReplyInsertDTO;
 import com.navangs.maribong.dto.post.ReplyModifyDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
+import com.navangs.maribong.dto.user.UserIdRequestDTO;
 import com.navangs.maribong.response.BaseResponse;
 import com.navangs.maribong.response.PostResponse;
 import com.navangs.maribong.service.PostService;
@@ -51,8 +52,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "getMyCommunityList", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<PostDTO> getMyPostList(@RequestBody String userId) {
-        return postService.getMyPosts(userId);
+    public List<PostDTO> getMyPostList(@RequestBody UserIdRequestDTO userIdDTO) {
+        return postService.getMyPosts(userIdDTO.getUserId());
     }
 
     @PostMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

@@ -2,6 +2,7 @@ package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.user.HistoryDTO;
 import com.navangs.maribong.dto.user.NotificationDTO;
+import com.navangs.maribong.dto.user.UserIdRequestDTO;
 import com.navangs.maribong.dto.user.UserLoginDTO;
 import com.navangs.maribong.dto.user.UserModifyDTO;
 import com.navangs.maribong.dto.user.UserMyPageDTO;
@@ -54,8 +55,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "getUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
-    public UserMyPageDTO getUserInfo(@RequestBody String userId) {
-        return userService.getUserInfo(userId);
+    public UserMyPageDTO getUserInfo(@RequestBody UserIdRequestDTO userIdDTO) {
+        return userService.getUserInfo(userIdDTO.getUserId());
     }
 
     @PostMapping(value = "userUpdateProfile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -68,8 +69,8 @@ public class UserController {
     }
 
     @PostMapping(value = "userDeleteProfile")
-    public BaseResponse deleteUserProfile(@RequestBody String userId) {
-        userService.deleteProfile(userId);
+    public BaseResponse deleteUserProfile(@RequestBody UserIdRequestDTO userIdDTO) {
+        userService.deleteProfile(userIdDTO.getUserId());
 
         return new BaseResponse("success");
     }
@@ -82,12 +83,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "getAlerm", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<NotificationDTO> getAlerm(@RequestBody String userId) {
-        return userService.getNotification(userId);
+    public List<NotificationDTO> getAlerm(@RequestBody UserIdRequestDTO userIdDTO) {
+        return userService.getNotification(userIdDTO.getUserId());
     }
 
     @RequestMapping(value = "getHistory", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<HistoryDTO> getHistory(@RequestBody String userId) {
-        return userService.getHistory(userId);
+    public List<HistoryDTO> getHistory(@RequestBody UserIdRequestDTO userIdDTO) {
+        return userService.getHistory(userIdDTO.getUserId());
     }
 }
