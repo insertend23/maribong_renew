@@ -58,7 +58,7 @@ public class UserController {
 
     @PostMapping(value = "userUpdateProfile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse updateUserProfile(@RequestPart("userId") String userId,
-                                          @RequestPart("file") MultipartFile file) {
+                                          @RequestPart("userProfile") MultipartFile file) {
         String profileUrl = userService.updateProfile(userId, file);
 
         return new BaseResponse(profileUrl);

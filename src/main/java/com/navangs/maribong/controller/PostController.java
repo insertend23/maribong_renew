@@ -57,7 +57,7 @@ public class PostController {
     }
 
     @PostMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public BaseResponse addPost(@RequestPart(name = "file", required = false) List<MultipartFile> images,
+    public BaseResponse addPost(@RequestPart(name = "picture", required = false) List<MultipartFile> images,
                                 @ModelAttribute @ParameterObject PostWriteDTO postWriteDTO) {
         String reaction = String.join(", ", reviewModelRequestService.getReaction(postWriteDTO.getContent()));
         postService.addPost(images, postWriteDTO, reaction);
