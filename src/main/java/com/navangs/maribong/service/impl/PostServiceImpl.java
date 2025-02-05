@@ -58,16 +58,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void addPostImage(MultipartFile images, Post post) {
-        String imageExtension = StringUtils.getFilenameExtension(images.getOriginalFilename());
+    public void addPostImage(MultipartFile image, Post post) {
+        String imageExtension = StringUtils.getFilenameExtension(image.getOriginalFilename());
         String randomImageName = String.join(".", UUID.randomUUID().toString(), imageExtension);
         PostPhoto photo = PostPhoto.builder()
             .post(post)
-            .originName(images.getOriginalFilename())
+            .originName(image.getOriginalFilename())
             .imgName(randomImageName)
             .build();
         postPhotoRepository.save(photo);
-        imageService.uploadImage(images, randomImageName);
+        imageService.uploadImage(image, randomImageName);
     }
 
     @Override
