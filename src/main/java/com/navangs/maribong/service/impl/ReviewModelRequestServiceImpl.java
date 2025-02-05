@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,7 +42,7 @@ public class ReviewModelRequestServiceImpl implements ReviewModelRequestService 
         RestTemplate restTemplate = new RestTemplate();
         try {
             return restTemplate.postForObject(reviewModelUrl, payload, Label.class);
-        } catch (RestClientResponseException e) {
+        } catch (ResourceAccessException | RestClientResponseException e) {
             return Label.getDefaultLabel();
         }
     }
