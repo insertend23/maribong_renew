@@ -7,14 +7,14 @@ import lombok.Data;
 @Builder
 @Data
 public class UserMyPageDTO {
-    String userId;
-    String userName;
-    String gender;
-    Integer birthYear;
-    Integer birthMonth;
-    String profile;
-    boolean pushChk;
-    Long postCount;
+    private String userId;
+    private String userName;
+    private String gender;
+    private Integer birthYear;
+    private Integer birthMonth;
+    private String profile;
+    private Boolean pushChk;
+    private Long postCount;
 
     public static UserMyPageDTO fromEntity(User user, Long postCount) {
         String genderLetter = user.getGender().equals('M') ? "남자" : "여자";
