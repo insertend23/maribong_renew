@@ -9,6 +9,7 @@ import com.navangs.maribong.entity.post.PostPhoto;
 import com.navangs.maribong.repository.post.PostLikeRepository;
 import com.navangs.maribong.repository.post.PostPhotoRepository;
 import com.navangs.maribong.repository.post.PostRepository;
+import com.navangs.maribong.repository.post.PostSpecification;
 import com.navangs.maribong.repository.post.ReplyRepository;
 import com.navangs.maribong.service.ImageService;
 import com.navangs.maribong.service.PostService;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,13 +35,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> getPosts(PostRequestDTO postRequestDTO) {
-        List<Post> posts;
-        if (postRequestDTO.hasNoSearchOptions()) {
-            posts = postRepository.findAll();
-        } else {
-            posts = postRepository.findBySearchOptions(DEFAULT_EXCLUDE_USER_ID,
-                postRequestDTO.getCountry(), postRequestDTO.getGroup(), postRequestDTO.getReaction());
-        }
+        Specification<Post> spec = PostSpecification.getSpec(DEFAULT_EXCLUDE_USER_ID, postRequestDTO.getCountry(),
+            postRequestDTO.getGroup(), postRequestDTO.getReaction());
+        List<Post> posts = postRepository.findAll(spec);
+
         return convertPostsToPostDTOs(posts, postRequestDTO.getUserId());
     }
 
