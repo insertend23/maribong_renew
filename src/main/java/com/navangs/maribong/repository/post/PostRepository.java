@@ -12,6 +12,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     Page<Post> findBy(Pageable pageable);
 
+    List<Post> findByUser_IdOrderByRegTimestampDesc(String userId);
+
     List<Post> findByUser_IdNotOrderByRegTimestampDesc(String userId);
 
     @Query(value = "SELECT p  FROM Post p "

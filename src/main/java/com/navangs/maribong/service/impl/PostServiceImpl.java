@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> getMyPosts(String userId) {
-        List<Post> posts = postRepository.findByUser_IdNotOrderByRegTimestampDesc(userId);
+        List<Post> posts = postRepository.findByUser_IdOrderByRegTimestampDesc(userId);
 
         return convertPostsToPostDTOs(posts, userId);
     }
