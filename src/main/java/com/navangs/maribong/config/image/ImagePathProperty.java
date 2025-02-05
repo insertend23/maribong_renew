@@ -1,4 +1,4 @@
-package com.navangs.maribong.config;
+package com.navangs.maribong.config.image;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,23 +17,8 @@ public class ImagePathProperty {
     private final String postImagePath;
     private final String profilePath;
 
-    public String getPostImageUploadPath() {
-        return String.join(PATH_SEPARATOR, uploadPath, postImagePath);
-    }
 
-    public String getPostImageQueryPath() {
-        return String.join(PATH_SEPARATOR, getUri(), queryPath, postImagePath);
-    }
-
-    public String getProfileUploadPath() {
-        return String.join(PATH_SEPARATOR, uploadPath, profilePath);
-    }
-
-    public String getProfileQueryPath() {
-        return String.join(PATH_SEPARATOR, getUri(), queryPath, profilePath);
-    }
-
-    private String getUri() {
+    public String getUri() {
         return SCHEME + host + ":" + port.toString();
     }
 }

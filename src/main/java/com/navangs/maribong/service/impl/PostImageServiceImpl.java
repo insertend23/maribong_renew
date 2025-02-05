@@ -1,6 +1,7 @@
 package com.navangs.maribong.service.impl;
 
-import com.navangs.maribong.config.ImagePathProperty;
+import com.navangs.maribong.config.image.ImagePath;
+import com.navangs.maribong.config.image.ImageUploadPath;
 import com.navangs.maribong.exception.FileTransferFailedException;
 import com.navangs.maribong.exception.IllegalImageUrlException;
 import com.navangs.maribong.service.ImageService;
@@ -19,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class PostImageServiceImpl implements ImageService {
     public static final String BEAN_NAME = "postImageService";
-    private final ImagePathProperty imagePathProperty;
+
+    @Qualifier(ImageUploadPath.BEAN_NAME)
+    private final ImagePath imagePath;
 
     @Override
     public UrlResource getImage(String imageName) {
@@ -54,6 +57,6 @@ public class PostImageServiceImpl implements ImageService {
     }
 
     private Path getPostImageUploadPath(String imageName) {
-        return Path.of(imagePathProperty.getPostImageUploadPath(), imageName);
+        return Path.of(imagePath.getPostImagePath(), imageName);
     }
 }
