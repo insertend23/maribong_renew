@@ -26,13 +26,13 @@ public class PostDTO {
     Integer replyCount;
     Integer likeCount;
     LocalDate regDate;
-    Boolean likeYn;
+    Integer likeYn;
 
     public static PostDTO create(
         Post post, List<PostPhoto> postPhotos, Integer replyCount, Integer likeCounts, Boolean myPostLike) {
         return PostDTO.builder()
             .userProfile(post.getUser().getProfile())
-            .thumbnail(POST_IMG_UPLOAD_PATH + postPhotos.getFirst().getImgName())
+            .thumbnail(postPhotos.isEmpty() ? "" : POST_IMG_UPLOAD_PATH + postPhotos.getFirst().getImgName())
             .userId(post.getUser().getId())
             .communityNo(post.getId().intValue())
             .content(post.getContent())
@@ -41,11 +41,12 @@ public class PostDTO {
             .areaName(post.getAreaName())
             .reaction(post.getReaction())
             .mark(post.getMark() ? "y" : "n")
+            .photoPaths(String.join(",", postPhotos.stream().map(PostPhoto::getImgName).toList()))
             .photoCount(postPhotos.size())
             .replyCount(replyCount)
             .likeCount(likeCounts)
             .regDate(post.getRegTimestamp().toLocalDate())
-            .likeYn(myPostLike)
+            .likeYn(myPostLike ? 1 : 0)
             .build();
     }
 }

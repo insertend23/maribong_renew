@@ -19,7 +19,9 @@ import com.navangs.maribong.service.ReviewModelRequestService;
 import java.util.List;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,8 +56,8 @@ public class PostController {
     }
 
     @PostMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public BaseResponse addPost(@RequestPart(name = "file") List<MultipartFile> images,
-                                @RequestPart PostWriteDTO postWriteDTO) {
+    public BaseResponse addPost(@RequestPart(name = "file", required = false) List<MultipartFile> images,
+                                @ModelAttribute @ParameterObject PostWriteDTO postWriteDTO) {
         String reaction = String.join(", ", reviewModelRequestService.getReaction(postWriteDTO.getContent()));
         postService.addPost(images, postWriteDTO, reaction);
 

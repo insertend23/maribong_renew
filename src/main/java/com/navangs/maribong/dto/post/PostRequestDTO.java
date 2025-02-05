@@ -12,6 +12,8 @@ public class PostRequestDTO {
     String reaction;
 
     public Boolean hasNoSearchOptions() {
-        return this.country.isEmpty() && this.group.isEmpty() && this.reaction.isEmpty();
+        return (this.country == null || this.country.isEmpty())
+            || (this.group == null || this.group.isEmpty())
+            || (this.reaction == null || this.reaction.isEmpty());
     }
 }
