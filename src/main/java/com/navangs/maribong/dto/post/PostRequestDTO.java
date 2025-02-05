@@ -13,7 +13,7 @@ public class PostRequestDTO {
 
     public Boolean hasNoSearchOptions() {
         return (this.country == null || this.country.isEmpty())
-            || (this.group == null || this.group.isEmpty())
-            || (this.reaction == null || this.reaction.isEmpty());
+            && (this.group == null || this.group.isEmpty())
+            && (this.reaction == null || this.reaction.isEmpty());
     }
 }
