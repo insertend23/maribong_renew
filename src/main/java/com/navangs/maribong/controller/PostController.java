@@ -20,8 +20,10 @@ import java.util.List;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +35,7 @@ public class PostController {
     private final PostService postService;
     private final ReviewModelRequestService reviewModelRequestService;
 
-    @RequestMapping(value = "getCommunityList")
+    @RequestMapping(value = "getCommunityList", method = {RequestMethod.GET, RequestMethod.POST})
     public List<PostResponse> getPosts(@RequestBody PostRequestDTO postRequestDTO) {
         List<PostDTO> posts = postService.getPosts(postRequestDTO);
         List<Integer> postIds = posts.stream()
@@ -46,12 +48,12 @@ public class PostController {
             .toList();
     }
 
-    @RequestMapping(value = "getMyCommunityList")
+    @RequestMapping(value = "getMyCommunityList", method = {RequestMethod.GET, RequestMethod.POST})
     public List<PostDTO> getMyPostList(@RequestBody String userId) {
         return postService.getMyPosts(userId);
     }
 
-    @RequestMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse addPost(@RequestPart(name = "file") List<MultipartFile> images,
                                 @RequestPart PostWriteDTO postWriteDTO) {
         String reaction = String.join(", ", reviewModelRequestService.getReaction(postWriteDTO.getContent()));
@@ -60,57 +62,57 @@ public class PostController {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "updateCommunity")
+    @PostMapping(value = "updateCommunity")
     public BaseResponse updatePost(@RequestBody PostModifyDTO postModifyDTO) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "deleteCommunity")
+    @PostMapping(value = "deleteCommunity")
     public BaseResponse deletePost(@RequestBody PostDeleteDTO postDeleteDTO) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "updateCommunityImg")
+    @PostMapping(value = "updateCommunityImg")
     public BaseResponse updatePostPhoto(@RequestPart PostPhotoModifyDTO postPhotoModifyDTO) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "deleteCommunityImg")
+    @PostMapping(value = "deleteCommunityImg")
     public BaseResponse deletePostPhoto(@RequestPart String imgPath) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "getReplyList")
+    @PostMapping(value = "getReplyList")
     public List<ReplyDTO> getReplies(@RequestBody ReplyRequestDTO replyRequestDTO) {
         return null;
     }
 
-    @RequestMapping(value = "insertReply")
+    @PostMapping(value = "insertReply")
     public ReplyDTO addReply(@RequestBody ReplyInsertDTO replyInsertDTO) {
         return null;
     }
 
-    @RequestMapping(value = "updateReply")
+    @PostMapping(value = "updateReply")
     public BaseResponse updateReply(@RequestBody ReplyModifyDTO replyModifyDTO) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "deleteReply")
+    @PostMapping(value = "deleteReply")
     public BaseResponse deleteReply(@RequestBody ReplyDeleteDTO replyDeleteDTO) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "getContect")
+    @PostMapping(value = "getContect")
     public String getMyPostLikeInPost(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
         return null;
     }
 
-    @RequestMapping(value = "insertContect")
+    @PostMapping(value = "insertContect")
     public BaseResponse addPostLike(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
         return new BaseResponse("success");
     }
 
-    @RequestMapping(value = "deleteContect")
+    @PostMapping(value = "deleteContect")
     public BaseResponse deletePostLike(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
         return new BaseResponse("success");
     }
