@@ -31,8 +31,10 @@ public class PostDTO {
     public static PostDTO create(
         Post post, List<PostPhoto> postPhotos, Integer replyCount, Integer likeCounts, Boolean myPostLike) {
         return PostDTO.builder()
-            .userProfile(post.getUser().getProfile())
-            .thumbnail(postPhotos.isEmpty() ? "" : POST_IMG_UPLOAD_PATH + postPhotos.getFirst().getImgName())
+            .userProfile("http://kyugyut.iptime.org:8090/img/profile/" + post.getUser().getProfile())
+            .thumbnail(
+                postPhotos.isEmpty() ? ""
+                    : "http://kyugyut.iptime.org:8090/img/postimg/" + postPhotos.getFirst().getImgName())
             .userId(post.getUser().getId())
             .communityNo(post.getId().intValue())
             .content(post.getContent())
@@ -41,12 +43,21 @@ public class PostDTO {
             .areaName(post.getAreaName())
             .reaction(post.getReaction())
             .mark(post.getMark() ? "y" : "n")
-            .photoPaths(String.join(",", postPhotos.stream().map(PostPhoto::getImgName).toList()))
+            .photoPaths(getPostImgPaths(postPhotos))
             .photoCount(postPhotos.size())
             .replyCount(replyCount)
             .likeCount(likeCounts)
             .regDate(post.getRegTimestamp().toLocalDate())
             .likeYn(myPostLike ? 1 : 0)
             .build();
+    }
+
+    private static String getPostImgPaths(List<PostPhoto> postPhotos) {
+        List<String> imgNames = postPhotos.stream()
+            .map(PostPhoto::getImgName)
+            .map(name -> "http://kyugyut.iptime.org:8090/img/postimg/" + name)
+            .toList();
+
+        return String.join(",", imgNames);
     }
 }

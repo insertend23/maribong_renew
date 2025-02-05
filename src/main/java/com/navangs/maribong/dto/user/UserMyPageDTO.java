@@ -18,6 +18,7 @@ public class UserMyPageDTO {
 
     public static UserMyPageDTO fromEntity(User user, Long postCount) {
         String genderLetter = user.getGender().equals('M') ? "남자" : "여자";
+        String profileUrlBase = "http://kyugyut.iptime.org:8090/img/profile/";
 
         return UserMyPageDTO.builder()
             .userId(user.getId())
@@ -25,7 +26,7 @@ public class UserMyPageDTO {
             .gender(genderLetter)
             .birthYear(user.getBirthYear())
             .birthMonth(user.getBirthMonth())
-            .profile(user.getProfile())
+            .profile(profileUrlBase + user.getProfile())
             .pushChk(user.getPushChk())
             .postCount(postCount)
             .build();
