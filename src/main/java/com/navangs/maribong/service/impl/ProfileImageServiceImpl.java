@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Qualifier(ProfileImageServiceImpl.BEAN_NAME)
 public class ProfileImageServiceImpl implements ImageService {
+    public static final String BEAN_NAME = "profileImageService";
     private static final String PROFILE_UPLOAD_PATH = "./src/main/uploads/profile/";
 
     @Override

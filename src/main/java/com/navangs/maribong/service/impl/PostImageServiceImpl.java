@@ -5,12 +5,15 @@ import com.navangs.maribong.service.ImageService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Qualifier(PostImageServiceImpl.BEAN_NAME)
 public class PostImageServiceImpl implements ImageService {
-    public static final String POST_IMG_UPLOAD_PATH = "./src/main/uploads/postimg/";
+    public static final String BEAN_NAME = "postImageService";
+    private static final String POST_IMG_UPLOAD_PATH = "./src/main/uploads/postimg/";
 
     @Override
     public void uploadImage(MultipartFile image, String imageName) {

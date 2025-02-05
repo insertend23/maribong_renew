@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     private final PostRepository postRepository;
     private final NotificationRepository notificationRepository;
     private final HistoryRepository historyRepository;
-    @Qualifier("profileImageServiceImpl")
+    @Qualifier(ProfileImageServiceImpl.BEAN_NAME)
     private final ImageService imageService;
 
     @Override

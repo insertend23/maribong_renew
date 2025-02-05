@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
     private final PostPhotoRepository postPhotoRepository;
     private final ReplyRepository replyRepository;
     private final PostLikeRepository postLikeRepository;
-    @Qualifier("postImageServiceImpl")
+    @Qualifier(PostImageServiceImpl.BEAN_NAME)
     private final ImageService imageService;
 
     @Override
