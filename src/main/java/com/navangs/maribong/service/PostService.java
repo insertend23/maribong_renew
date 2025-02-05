@@ -1,6 +1,6 @@
 package com.navangs.maribong.service;
 
-import com.navangs.maribong.dto.post.PostDTO;
+import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
@@ -9,13 +9,13 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface PostService {
-    List<PostDTO> getPosts(PostRequestDTO postRequestDTO);
+    List<PostOverviewDTO> getPosts(PostRequestDTO postRequestDTO);
 
-    List<PostDTO> getMyPosts(String userId);
+    List<PostOverviewDTO> getMyPosts(String userId);
 
     void addPost(List<MultipartFile> images, PostWriteDTO postWriteDTO, String reaction);
 
     void addPostImage(MultipartFile images, Post post);
 
-    List<List<ReplyDTO>> getReplies(List<Integer> postIds);
+    List<List<ReplyDTO>> getReplies(List<Long> postIds);
 }

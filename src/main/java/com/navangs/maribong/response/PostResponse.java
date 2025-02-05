@@ -1,6 +1,6 @@
 package com.navangs.maribong.response;
 
-import com.navangs.maribong.dto.post.PostDTO;
+import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
 import java.util.List;
 import lombok.Builder;
@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 @Builder
 public class PostResponse {
-    PostDTO sr;
+    PostOverviewDTO sr;
     List<ReplyDTO> resultReplyList;
 
-    public static PostResponse fromDTOs(PostDTO postDTO, List<ReplyDTO> replyDTOList) {
+    public static PostResponse fromDTOs(PostOverviewDTO postOverviewDTO, List<ReplyDTO> replyDTOList) {
         return PostResponse.builder()
-            .sr(postDTO)
+            .sr(postOverviewDTO)
             .resultReplyList(replyDTOList)
             .build();
     }

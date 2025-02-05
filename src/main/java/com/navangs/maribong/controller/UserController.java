@@ -12,7 +12,6 @@ import com.navangs.maribong.response.UserCountResponse;
 import com.navangs.maribong.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private static final BaseResponse SUCCESS_CODE_RESPONSE = new BaseResponse("100");
     private final UserService userService;
-    @Value("${image.url.host}")
-    private String HOST_URL;
 
     @RequestMapping(value = "getUserCount", method = {RequestMethod.GET, RequestMethod.POST})
     public UserCountResponse getUserCount() {
@@ -62,8 +59,7 @@ public class UserController {
     @PostMapping(value = "userUpdateProfile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse updateUserProfile(@RequestPart("userId") String userId,
                                           @RequestPart("file") MultipartFile file) {
-        String profileName = userService.updateProfile(userId, file);
-        String profileUrl = HOST_URL + "/profile/" + profileName;
+        String profileUrl = userService.updateProfile(userId, file);
 
         return new BaseResponse(profileUrl);
     }

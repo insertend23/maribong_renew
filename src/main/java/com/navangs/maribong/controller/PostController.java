@@ -1,9 +1,9 @@
 package com.navangs.maribong.controller;
 
-import com.navangs.maribong.dto.post.PostDTO;
 import com.navangs.maribong.dto.post.PostDeleteDTO;
 import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
+import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.PostPhotoModifyDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
@@ -40,9 +40,9 @@ public class PostController {
 
     @RequestMapping(value = "getCommunityList", method = {RequestMethod.GET, RequestMethod.POST})
     public List<PostResponse> getPosts(@RequestBody PostRequestDTO postRequestDTO) {
-        List<PostDTO> posts = postService.getPosts(postRequestDTO);
-        List<Integer> postIds = posts.stream()
-            .map(PostDTO::getCommunityNo)
+        List<PostOverviewDTO> posts = postService.getPosts(postRequestDTO);
+        List<Long> postIds = posts.stream()
+            .map(PostOverviewDTO::getCommunityNo)
             .toList();
         List<List<ReplyDTO>> replies = postService.getReplies(postIds);
 
@@ -52,7 +52,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "getMyCommunityList", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<PostDTO> getMyPostList(@RequestBody UserIdRequestDTO userIdDTO) {
+    public List<PostOverviewDTO> getMyPostList(@RequestBody UserIdRequestDTO userIdDTO) {
         return postService.getMyPosts(userIdDTO.getUserId());
     }
 

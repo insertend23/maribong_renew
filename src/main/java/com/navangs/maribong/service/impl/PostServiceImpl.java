@@ -1,6 +1,10 @@
 package com.navangs.maribong.service.impl;
 
+import com.navangs.maribong.config.image.ImagePath;
+import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.post.PostDTO;
+import com.navangs.maribong.dto.post.PostOverviewDTO;
+import com.navangs.maribong.dto.post.PostPhotosDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
@@ -30,11 +34,15 @@ public class PostServiceImpl implements PostService {
     private final PostPhotoRepository postPhotoRepository;
     private final ReplyRepository replyRepository;
     private final PostLikeRepository postLikeRepository;
+
     @Qualifier(PostImageServiceImpl.BEAN_NAME)
     private final ImageService imageService;
 
+    @Qualifier(ImageQueryPath.BEAN_NAME)
+    private final ImagePath imagePath;
+
     @Override
-    public List<PostDTO> getPosts(PostRequestDTO postRequestDTO) {
+    public List<PostOverviewDTO> getPosts(PostRequestDTO postRequestDTO) {
         Specification<Post> spec = PostSpecification.getSpec(DEFAULT_EXCLUDE_USER_ID, postRequestDTO.getCountry(),
             postRequestDTO.getGroup(), postRequestDTO.getReaction());
         List<Post> posts = postRepository.findAll(spec);
@@ -43,7 +51,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getMyPosts(String userId) {
+    public List<PostOverviewDTO> getMyPosts(String userId) {
         List<Post> posts = postRepository.findByUser_IdOrderByRegTimestampDesc(userId);
 
         return convertPostsToPostDTOs(posts, userId);
@@ -70,22 +78,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<List<ReplyDTO>> getReplies(List<Integer> postIds) {
+    public List<List<ReplyDTO>> getReplies(List<Long> postIds) {
         return postIds.stream()
-            .map(Integer::longValue)
             .map(replyRepository::findByPost_Id)
             .map(replies -> replies.stream().map(ReplyDTO::fromEntity).toList())
             .toList();
     }
 
-    private List<PostDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
+    private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
         return posts.stream()
             .map(post -> {
+                PostDTO postDTO = PostDTO.fromEntity(post, imagePath.getProfilePath());
                 List<PostPhoto> postPhotos = postPhotoRepository.findByPostId(post.getId());
+                PostPhotosDTO postPhotosDTO = PostPhotosDTO.fromEntities(postPhotos, imagePath.getPostImagePath());
                 Integer replyCount = replyRepository.countByPost_Id(post.getId()).intValue();
                 Integer postLikes = postLikeRepository.countById_PostId(post.getId()).intValue();
                 Boolean myPostLike = postLikeRepository.existsById_PostIdAndId_UserId(post.getId(), userId);
-                return PostDTO.create(post, postPhotos, replyCount, postLikes, myPostLike);
+                return PostOverviewDTO.create2(postDTO, postPhotosDTO, replyCount, postLikes, myPostLike);
             })
             .toList();
     }

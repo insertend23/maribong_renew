@@ -1,5 +1,7 @@
 package com.navangs.maribong.service.impl;
 
+import com.navangs.maribong.config.image.ImagePath;
+import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.user.HistoryDTO;
 import com.navangs.maribong.dto.user.NotificationDTO;
 import com.navangs.maribong.dto.user.UserLoginDTO;
@@ -37,6 +39,9 @@ public class UserServiceImpl implements UserService {
     private final HistoryRepository historyRepository;
     @Qualifier(ProfileImageServiceImpl.BEAN_NAME)
     private final ImageService imageService;
+
+    @Qualifier(ImageQueryPath.BEAN_NAME)
+    private final ImagePath imagePath;
 
     @Override
     @Transactional
@@ -99,7 +104,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         imageService.uploadImage(profile, randomProfileName);
 
-        return randomProfileName;
+        return String.join("/", imagePath.getProfilePath(), randomProfileName);
     }
 
     @Override
