@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/img")
+@RequestMapping("/${image.url.query-path}")
 public class ImageController {
     @Qualifier(PostImageServiceImpl.BEAN_NAME)
     private final ImageService postImageService;

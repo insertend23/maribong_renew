@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private static final BaseResponse SUCCESS_CODE_RESPONSE = new BaseResponse("100");
     private final UserService userService;
-    @Value("${prop.host-url}")
+    @Value("${image.url.host}")
     private String HOST_URL;
 
     @RequestMapping(value = "getUserCount", method = {RequestMethod.GET, RequestMethod.POST})

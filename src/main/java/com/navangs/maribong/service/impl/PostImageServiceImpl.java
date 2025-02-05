@@ -1,5 +1,6 @@
 package com.navangs.maribong.service.impl;
 
+import com.navangs.maribong.config.ImagePathProperty;
 import com.navangs.maribong.exception.FileTransferFailedException;
 import com.navangs.maribong.exception.IllegalImageUrlException;
 import com.navangs.maribong.service.ImageService;
@@ -7,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Qualifier(PostImageServiceImpl.BEAN_NAME)
+@RequiredArgsConstructor
 public class PostImageServiceImpl implements ImageService {
     public static final String BEAN_NAME = "postImageService";
-    private static final String POST_IMG_UPLOAD_PATH = "./src/main/uploads/postimg/";
+    private final ImagePathProperty imagePathProperty;
 
     @Override
     public UrlResource getImage(String imageName) {
-        Path imagePath = Paths.get(POST_IMG_UPLOAD_PATH + imageName);
+        Path imagePath = getPostImageUploadPath(imageName);
         try {
             return new UrlResource(imagePath.toUri());
         } catch (MalformedURLException e) {
@@ -31,7 +33,7 @@ public class PostImageServiceImpl implements ImageService {
 
     @Override
     public void uploadImage(MultipartFile image, String imageName) {
-        Path uploadPath = Path.of(POST_IMG_UPLOAD_PATH + imageName).toAbsolutePath();
+        Path uploadPath = getPostImageUploadPath(imageName).toAbsolutePath();
         try {
             image.transferTo(uploadPath);
         } catch (IOException e) {
@@ -44,11 +46,14 @@ public class PostImageServiceImpl implements ImageService {
         if (savedImageName == null || savedImageName.isEmpty()) {
             return;
         }
-        Path savedPath = Path.of(POST_IMG_UPLOAD_PATH + savedImageName);
+        Path savedPath = getPostImageUploadPath(savedImageName);
         File savedProfileFile = savedPath.toFile();
         if (savedProfileFile.exists()) {
             savedProfileFile.delete();
         }
+    }
 
+    private Path getPostImageUploadPath(String imageName) {
+        return Path.of(imagePathProperty.getPostImageUploadPath(), imageName);
     }
 }

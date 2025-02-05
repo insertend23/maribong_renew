@@ -1,5 +1,6 @@
 package com.navangs.maribong.service.impl;
 
+import com.navangs.maribong.config.ImagePathProperty;
 import com.navangs.maribong.exception.FileTransferFailedException;
 import com.navangs.maribong.exception.IllegalImageUrlException;
 import com.navangs.maribong.service.ImageService;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.UrlResource;
@@ -18,13 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Qualifier(ProfileImageServiceImpl.BEAN_NAME)
+@RequiredArgsConstructor
 public class ProfileImageServiceImpl implements ImageService {
     public static final String BEAN_NAME = "profileImageService";
-    private static final String PROFILE_UPLOAD_PATH = "./src/main/uploads/profile/";
+    private final ImagePathProperty imagePathProperty;
 
     @Override
     public UrlResource getImage(String imageName) {
-        Path imagePath = Paths.get(PROFILE_UPLOAD_PATH + imageName);
+        Path imagePath = getProfileUploadPath(imageName);
         try {
             return new UrlResource(imagePath.toUri());
         } catch (MalformedURLException e) {
@@ -34,7 +36,7 @@ public class ProfileImageServiceImpl implements ImageService {
 
     @Override
     public void uploadImage(MultipartFile image, String imageName) {
-        Path uploadPath = Path.of(PROFILE_UPLOAD_PATH + imageName).toAbsolutePath();
+        Path uploadPath = getProfileUploadPath(imageName).toAbsolutePath();
         try (OutputStream profileOs = new FileOutputStream(uploadPath.toFile())) {
             resizeProfileImage(image, profileOs);
         } catch (IOException e) {
@@ -47,7 +49,7 @@ public class ProfileImageServiceImpl implements ImageService {
         if (savedImageName == null || savedImageName.isEmpty()) {
             return;
         }
-        Path savedPath = Path.of(PROFILE_UPLOAD_PATH + savedImageName);
+        Path savedPath = getProfileUploadPath(savedImageName);
         File savedProfileFile = savedPath.toFile();
         if (savedProfileFile.exists()) {
             savedProfileFile.delete();
@@ -63,5 +65,9 @@ public class ProfileImageServiceImpl implements ImageService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Path getProfileUploadPath(String imageName) {
+        return Path.of(imagePathProperty.getProfileUploadPath(), imageName);
     }
 }
