@@ -12,7 +12,7 @@ public class UserMyPageDTO {
     private String sex;
     private Integer birthYear;
     private Integer birthMonth;
-    private String profile;
+    private String userProfile;
     private String pushCheck;
     private Long cmCnt;
 
@@ -26,7 +26,7 @@ public class UserMyPageDTO {
             .sex(genderLetter)
             .birthYear(user.getBirthYear())
             .birthMonth(user.getBirthMonth())
-            .profile(profileUrlBase + user.getProfile())
+            .userProfile(profileUrlBase + user.getProfile())
             .pushCheck(user.getPushChk() ? "1" : "0")
             .cmCnt(postCount)
             .build();
