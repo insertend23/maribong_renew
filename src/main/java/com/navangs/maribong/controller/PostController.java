@@ -81,7 +81,10 @@ public class PostController {
     }
 
     @PostMapping(value = "updateCommunityImg")
-    public BaseResponse updatePostPhoto(@RequestPart PostPhotoModifyDTO postPhotoModifyDTO) {
+    public BaseResponse updatePostPhoto(@RequestPart(name = "picture") List<MultipartFile> images,
+                                        @RequestPart PostPhotoModifyDTO postPhotoModifyDTO) {
+        postService.updatePostImage(images, postPhotoModifyDTO);
+
         return new BaseResponse("success");
     }
 

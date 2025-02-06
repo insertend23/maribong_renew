@@ -6,6 +6,7 @@ import com.navangs.maribong.dto.post.PostDTO;
 import com.navangs.maribong.dto.post.PostDeleteDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
+import com.navangs.maribong.dto.post.PostPhotoModifyDTO;
 import com.navangs.maribong.dto.post.PostPhotosDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
@@ -76,6 +77,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public void deletePost(PostDeleteDTO postDeleteDTO) {
+        Post post = validatePostIdAndGetPost(postDeleteDTO.getCommunityNo());
+        postRepository.delete(post);
+    }
+
+    @Override
     public void addPostImage(MultipartFile image, Post post) {
         String imageExtension = StringUtils.getFilenameExtension(image.getOriginalFilename());
         String randomImageName = String.join(".", UUID.randomUUID().toString(), imageExtension);
@@ -89,9 +96,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(PostDeleteDTO postDeleteDTO) {
-        Post post = validatePostIdAndGetPost(postDeleteDTO.getCommunityNo());
-        postRepository.delete(post);
+    public void updatePostImage(List<MultipartFile> images, PostPhotoModifyDTO postPhotoModifyDTO) {
+        Post post = validatePostIdAndGetPost(postPhotoModifyDTO.getCommunityNo());
+        images.forEach(image -> addPostImage(image, post));
     }
 
     @Override

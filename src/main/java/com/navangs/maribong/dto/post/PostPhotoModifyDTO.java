@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class PostPhotoModifyDTO {
     String userId;
-    String communityNo;
+    Long communityNo;
 }
