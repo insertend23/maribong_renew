@@ -41,6 +41,10 @@ public class Reply extends TimeEntity {
     @Column(nullable = false, length = 200)
     private String content;
 
+    public void modify(String content) {
+        this.content = content;
+    }
+
     public static Reply fromInsertDTO(ReplyInsertDTO dto) {
         Post post = Post.builder().id(dto.getCommunityNo()).build();
         User user = User.builder().id(dto.getUserId()).build();

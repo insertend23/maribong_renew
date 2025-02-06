@@ -12,11 +12,13 @@ import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
 import com.navangs.maribong.dto.post.ReplyInsertDTO;
+import com.navangs.maribong.dto.post.ReplyModifyDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.entity.post.Post;
 import com.navangs.maribong.entity.post.PostPhoto;
 import com.navangs.maribong.entity.post.Reply;
 import com.navangs.maribong.exception.InvalidPostIdException;
+import com.navangs.maribong.exception.InvalidReplyIdException;
 import com.navangs.maribong.repository.post.PostLikeRepository;
 import com.navangs.maribong.repository.post.PostPhotoRepository;
 import com.navangs.maribong.repository.post.PostRepository;
@@ -125,11 +127,20 @@ public class PostServiceImpl implements PostService {
     public List<ReplyDTO> addReply(ReplyInsertDTO replyInsertDTO) {
         Reply reply = Reply.fromInsertDTO(replyInsertDTO);
         replyRepository.save(reply);
-
         ReplyRequestDTO replyRequest = ReplyRequestDTO.fromInsertDTO(replyInsertDTO);
+
         return getReplies(replyRequest);
     }
 
+    @Override
+    public void updateReply(ReplyModifyDTO replyModifyDTO) {
+        Reply reply = replyRepository.findById(replyModifyDTO.getReplyNo()).orElse(null);
+        if (reply == null) {
+            throw new InvalidReplyIdException();
+        }
+        reply.modify(replyModifyDTO.getContent());
+        replyRepository.save(reply);
+    }
 
     private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
         return posts.stream()

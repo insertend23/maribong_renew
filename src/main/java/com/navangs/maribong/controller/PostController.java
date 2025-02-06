@@ -100,6 +100,8 @@ public class PostController {
 
     @PostMapping(value = "updateReply")
     public BaseResponse updateReply(@RequestBody ReplyModifyDTO replyModifyDTO) {
+        postService.updateReply(replyModifyDTO);
+
         return new BaseResponse("success");
     }
 
