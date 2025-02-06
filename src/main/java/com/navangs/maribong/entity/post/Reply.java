@@ -1,5 +1,6 @@
 package com.navangs.maribong.entity.post;
 
+import com.navangs.maribong.dto.post.ReplyInsertDTO;
 import com.navangs.maribong.entity.TimeEntity;
 import com.navangs.maribong.entity.user.User;
 import jakarta.persistence.Column;
@@ -39,4 +40,15 @@ public class Reply extends TimeEntity {
 
     @Column(nullable = false, length = 200)
     private String content;
+
+    public static Reply fromInsertDTO(ReplyInsertDTO dto) {
+        Post post = Post.builder().id(dto.getCommunityNo()).build();
+        User user = User.builder().id(dto.getUserId()).build();
+
+        return Reply.builder()
+            .post(post)
+            .user(user)
+            .content(dto.getContent())
+            .build();
+    }
 }

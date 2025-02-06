@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 @Builder
 public class ReplyDTO {
-    Long communityNo;
-    Long replyNo;
-    String auserId;
-    String content;
-    LocalDate regDate;
+    private Long communityNo;
+    private Long replyNo;
+    private String auserId;
+    private String content;
+    private LocalDate regDate;
 
     public static ReplyDTO fromEntity(Reply reply) {
         return ReplyDTO.builder()

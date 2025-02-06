@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class ReplyInsertDTO {
-    String userId;
-    String communityNo;
-    String auserId;
-    String content;
+    private String userId;
+    private Long communityNo;
+    private String auserId;
+    private String content;
 }

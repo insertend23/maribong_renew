@@ -11,6 +11,7 @@ import com.navangs.maribong.dto.post.PostPhotosDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
+import com.navangs.maribong.dto.post.ReplyInsertDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.entity.post.Post;
 import com.navangs.maribong.entity.post.PostPhoto;
@@ -119,6 +120,16 @@ public class PostServiceImpl implements PostService {
             .map(ReplyDTO::fromEntity)
             .toList();
     }
+
+    @Override
+    public List<ReplyDTO> addReply(ReplyInsertDTO replyInsertDTO) {
+        Reply reply = Reply.fromInsertDTO(replyInsertDTO);
+        replyRepository.save(reply);
+
+        ReplyRequestDTO replyRequest = ReplyRequestDTO.fromInsertDTO(replyInsertDTO);
+        return getReplies(replyRequest);
+    }
+
 
     private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
         return posts.stream()

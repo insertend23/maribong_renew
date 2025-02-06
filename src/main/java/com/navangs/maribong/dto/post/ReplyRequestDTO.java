@@ -6,6 +6,13 @@ import lombok.Data;
 @Data
 @Builder
 public class ReplyRequestDTO {
-    String userId;
-    Long communityNo;
+    private String userId;
+    private Long communityNo;
+
+    public static ReplyRequestDTO fromInsertDTO(ReplyInsertDTO dto) {
+        return ReplyRequestDTO.builder()
+            .userId(dto.getUserId())
+            .communityNo(dto.getCommunityNo())
+            .build();
+    }
 }

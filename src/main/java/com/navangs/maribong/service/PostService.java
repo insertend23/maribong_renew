@@ -7,6 +7,7 @@ import com.navangs.maribong.dto.post.PostPhotoModifyDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
+import com.navangs.maribong.dto.post.ReplyInsertDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.entity.post.Post;
 import java.util.List;
@@ -30,4 +31,6 @@ public interface PostService {
     List<List<ReplyDTO>> getAllReplies(List<Long> postIds);
 
     List<ReplyDTO> getReplies(ReplyRequestDTO replyRequestDTO);
+
+    List<ReplyDTO> addReply(ReplyInsertDTO replyInsertDTO);
 }
