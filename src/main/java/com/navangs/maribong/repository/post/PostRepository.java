@@ -17,6 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
 
     List<Post> findByUser_IdNotOrderByRegTimestampDesc(String userId);
 
+
     @Query(value = "SELECT p  FROM Post p "
         + "WHERE p.user.id != :excludeUserId "
         + "   AND p.country = :country "

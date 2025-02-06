@@ -4,6 +4,7 @@ import com.navangs.maribong.config.image.ImagePath;
 import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.post.PostDTO;
 import com.navangs.maribong.dto.post.PostDeleteDTO;
+import com.navangs.maribong.dto.post.PostDetailRequestDTO;
 import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
@@ -62,14 +63,21 @@ public class PostServiceImpl implements PostService {
             postRequestDTO.getGroup(), postRequestDTO.getReaction());
         List<Post> posts = postRepository.findAll(spec);
 
-        return convertPostsToPostDTOs(posts, postRequestDTO.getUserId());
+        return convertPostsToPostOverviewDTOs(posts, postRequestDTO.getUserId());
     }
 
     @Override
     public List<PostOverviewDTO> getMyPosts(String userId) {
         List<Post> posts = postRepository.findByUser_IdOrderByRegTimestampDesc(userId);
 
-        return convertPostsToPostDTOs(posts, userId);
+        return convertPostsToPostOverviewDTOs(posts, userId);
+    }
+
+    @Override
+    public PostOverviewDTO getPostDetail(PostDetailRequestDTO postDetailRequestDTO) {
+        Post post = validatePostIdAndGetPost(postDetailRequestDTO.getCommunityNo());
+
+        return convertPostToPostOverviewDTO(post, postDetailRequestDTO.getUserId());
     }
 
     @Override
@@ -174,18 +182,21 @@ public class PostServiceImpl implements PostService {
         postLikeRepository.delete(postLike);
     }
 
-    private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
+    private List<PostOverviewDTO> convertPostsToPostOverviewDTOs(List<Post> posts, String userId) {
         return posts.stream()
-            .map(post -> {
-                PostDTO postDTO = PostDTO.fromEntity(post, imagePath.getProfilePath());
-                List<PostPhoto> postPhotos = postPhotoRepository.findByPostId(post.getId());
-                PostPhotosDTO postPhotosDTO = PostPhotosDTO.fromEntities(postPhotos, imagePath.getPostImagePath());
-                Integer replyCount = replyRepository.countByPost_Id(post.getId()).intValue();
-                Integer postLikes = postLikeRepository.countById_PostId(post.getId()).intValue();
-                Boolean myPostLike = postLikeRepository.existsById_PostIdAndId_UserId(post.getId(), userId);
-                return PostOverviewDTO.create2(postDTO, postPhotosDTO, replyCount, postLikes, myPostLike);
-            })
+            .map(post -> convertPostToPostOverviewDTO(post, userId))
             .toList();
+    }
+
+    private PostOverviewDTO convertPostToPostOverviewDTO(Post post, String userId) {
+        PostDTO postDTO = PostDTO.fromEntity(post, imagePath.getProfilePath());
+        List<PostPhoto> postPhotos = postPhotoRepository.findByPostId(post.getId());
+        PostPhotosDTO postPhotosDTO = PostPhotosDTO.fromEntities(postPhotos, imagePath.getPostImagePath());
+        Integer replyCount = replyRepository.countByPost_Id(post.getId()).intValue();
+        Integer postLikes = postLikeRepository.countById_PostId(post.getId()).intValue();
+        Boolean myPostLike = postLikeRepository.existsById_PostIdAndId_UserId(post.getId(), userId);
+
+        return PostOverviewDTO.of(postDTO, postPhotosDTO, replyCount, postLikes, myPostLike);
     }
 
     private Post validatePostIdAndGetPost(Long postId) {

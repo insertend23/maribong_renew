@@ -1,6 +1,7 @@
 package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.post.PostDeleteDTO;
+import com.navangs.maribong.dto.post.PostDetailRequestDTO;
 import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
@@ -55,6 +56,11 @@ public class PostController {
     @RequestMapping(value = "getMyCommunityList", method = {RequestMethod.GET, RequestMethod.POST})
     public List<PostOverviewDTO> getMyPostList(@RequestBody UserIdRequestDTO userIdDTO) {
         return postService.getMyPosts(userIdDTO.getUserId());
+    }
+
+    @RequestMapping(value = "getCommunityDetail", method = {RequestMethod.GET, RequestMethod.POST})
+    public PostOverviewDTO getCommunityDetail(@RequestBody PostDetailRequestDTO postDetailRequestDTO) {
+        return postService.getPostDetail(postDetailRequestDTO);
     }
 
     @PostMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

@@ -1,6 +1,7 @@
 package com.navangs.maribong.service;
 
 import com.navangs.maribong.dto.post.PostDeleteDTO;
+import com.navangs.maribong.dto.post.PostDetailRequestDTO;
 import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
@@ -20,6 +21,8 @@ public interface PostService {
     List<PostOverviewDTO> getPosts(PostRequestDTO postRequestDTO);
 
     List<PostOverviewDTO> getMyPosts(String userId);
+
+    PostOverviewDTO getPostDetail(PostDetailRequestDTO postDetailRequestDTO);
 
     void addPost(List<MultipartFile> images, PostWriteDTO postWriteDTO, String reaction);
 
