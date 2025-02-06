@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReplyRepository extends JpaRepository<Reply, Integer> {
+public interface ReplyRepository extends JpaRepository<Reply, Long> {
     List<Reply> findByPost_Id(Long postId);
 
     List<Reply> findByPost_Id(Long postId, Limit limit);
+
+    Long countByPost_Id(Long postId);
 }

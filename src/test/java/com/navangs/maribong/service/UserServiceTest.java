@@ -174,7 +174,7 @@ class UserServiceTest {
         UserMyPageDTO userMyPageDTO = userService.getUserInfo(testUserDTO.getId());
 
         Assertions.assertThat(userMyPageDTO.getUserId()).isEqualTo(testUserDTO.getId());
-        Assertions.assertThat(userMyPageDTO.getPostCount()).isEqualTo(testPostCount);
+        Assertions.assertThat(userMyPageDTO.getCmCnt()).isEqualTo(testPostCount);
     }
 
     @Test
@@ -337,9 +337,9 @@ class UserServiceTest {
 
         Assertions.assertThat(notificationDTO.getUserId()).isEqualTo("admin");
         Assertions.assertThat(notificationDTO.getCategory()).isEqualTo(1);
-        Assertions.assertThat(notificationDTO.getPostId()).isEqualTo(15L);
-        Assertions.assertThat(notificationDTO.getUserName()).isEqualTo("관리자");
-        Assertions.assertThat(notificationDTO.getMessage()).isEqualTo("<공지>");
+        Assertions.assertThat(notificationDTO.getCommunityNo()).isEqualTo(15L);
+        Assertions.assertThat(notificationDTO.getTitle1()).isEqualTo("관리자");
+        Assertions.assertThat(notificationDTO.getTitle2()).isEqualTo("<공지>");
     }
 
     @Test
@@ -360,6 +360,7 @@ class UserServiceTest {
             .startDate(LocalDate.now())
             .endDate(LocalDate.now())
             .build();
+        String testTerm = String.join(" ~ ", history.getStartDate().toString(), history.getEndDate().toString());
 
         Mockito.when(userRepository.findById(testUserDTO.getId())).thenReturn(Optional.of(user));
         Mockito.when(historyRepository.findByUserId(user.getId())).thenReturn(List.of(history));
@@ -368,8 +369,7 @@ class UserServiceTest {
         Assertions.assertThat(historyDTO.getId()).isEqualTo(history.getId());
         Assertions.assertThat(historyDTO.getUserId()).isEqualTo(user.getId());
         Assertions.assertThat(historyDTO.getTitle()).isEqualTo(history.getTitle());
-        Assertions.assertThat(historyDTO.getStartDate()).isEqualTo(history.getStartDate());
-        Assertions.assertThat(historyDTO.getEndDate()).isEqualTo(history.getEndDate());
+        Assertions.assertThat(historyDTO.getTerm()).isEqualTo(testTerm);
     }
 
     @Test

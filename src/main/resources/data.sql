@@ -62,28 +62,28 @@ insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test', '테스트 글', 'world', 'test group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글2', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글2', 'world', 'test2 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글3', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글3', 'world', 'test3 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글4', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글4', 'world', 'test2 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글5', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글5', 'world', 'test2 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글6', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글6', 'world', 'test3 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글7', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글7', 'korea', 'test3 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글8', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글8', 'korea', 'test3 group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test', '테스트 글9', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test', '테스트 글9', 'korea', 'test group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test2', '테스트2 글', 'world', 'test group', 'test area', '라벨 없음');
@@ -92,7 +92,7 @@ insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test2', '테스트2 글2', 'world', 'test group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
-VALUES ('test2', '테스트2 글3', 'world', 'test group', 'test area', '라벨 없음');
+VALUES ('test2', '테스트2 글3', 'korea', 'test group', 'test area', '라벨 없음');
 
 insert into post (user_id, content, country, group_name, area_name, reaction)
 VALUES ('test3', '테스트3 글', 'world', 'test group', 'test area', '라벨 없음');
@@ -118,11 +118,11 @@ VALUES ('1', 'test2', '테스트2 댓글');
 insert into reply (post_id, user_id, content)
 VALUES ('1', 'test3', '테스트3 댓글');
 
-insert into post_photo (post_id, origin_name, img_name, img_path)
-VALUES (1, 'test_img', 'ttteeeesssstttiimmggg', 'img_path');
+insert into post_photo (post_id, origin_name, img_name)
+VALUES (1, 'test_img', 'ttteeeesssstttiimmggg');
 
-insert into post_photo (post_id, origin_name, img_name, img_path)
-VALUES (1, 'test_img2', 'ttteeeesssstttiimmggg2', 'img_path2');
+insert into post_photo (post_id, origin_name, img_name)
+VALUES (1, 'test_img2', 'ttteeeesssstttiimmggg2');
 
 insert into post_like (post_id, user_id)
 VALUES (1, 'test2');

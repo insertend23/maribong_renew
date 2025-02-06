@@ -7,27 +7,28 @@ import lombok.Data;
 @Builder
 @Data
 public class UserMyPageDTO {
-    String userId;
-    String userName;
-    String gender;
-    Integer birthYear;
-    Integer birthMonth;
-    String profile;
-    boolean pushChk;
-    Long postCount;
+    private String userId;
+    private String userName;
+    private String sex;
+    private Integer birthYear;
+    private Integer birthMonth;
+    private String userProfile;
+    private String pushCheck;
+    private Long cmCnt;
 
     public static UserMyPageDTO fromEntity(User user, Long postCount) {
         String genderLetter = user.getGender().equals('M') ? "남자" : "여자";
+        String profileUrlBase = "http://kyugyut.iptime.org:8090/img/profile/";
 
         return UserMyPageDTO.builder()
             .userId(user.getId())
             .userName(user.getName())
-            .gender(genderLetter)
+            .sex(genderLetter)
             .birthYear(user.getBirthYear())
             .birthMonth(user.getBirthMonth())
-            .profile(user.getProfile())
-            .pushChk(user.getPushChk())
-            .postCount(postCount)
+            .userProfile(profileUrlBase + user.getProfile())
+            .pushCheck(user.getPushChk() ? "1" : "0")
+            .cmCnt(postCount)
             .build();
     }
 }

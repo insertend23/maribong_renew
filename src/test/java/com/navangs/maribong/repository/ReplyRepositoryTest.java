@@ -27,4 +27,11 @@ class ReplyRepositoryTest {
 
         Assertions.assertThat(replies).hasSize(3);
     }
+
+    @Test
+    void countByPostId() {
+        Long count = replyRepository.countByPost_Id(1L);
+
+        Assertions.assertThat(count).isEqualTo(5L);
+    }
 }

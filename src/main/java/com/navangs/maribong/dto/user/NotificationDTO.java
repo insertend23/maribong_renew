@@ -8,18 +8,18 @@ import lombok.Data;
 @Builder
 public class NotificationDTO {
     Integer category;
-    String userName;
-    String message;
+    String title1;
+    String title2;
     String userId;
-    Long postId;
+    Long communityNo;
 
     public static NotificationDTO fromEntity(Notification notification) {
         return NotificationDTO.builder()
             .category(notification.getCategory())
-            .userName(notification.getUserName())
-            .message(notification.getId().getMessage())
+            .title1(notification.getUserName())
+            .title2(notification.getId().getMessage())
             .userId(notification.getId().getUserId())
-            .postId(notification.getId().getPostId())
+            .communityNo(notification.getId().getPostId())
             .build();
     }
 }

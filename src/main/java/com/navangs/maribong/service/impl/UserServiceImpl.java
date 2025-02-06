@@ -1,5 +1,7 @@
 package com.navangs.maribong.service.impl;
 
+import com.navangs.maribong.config.image.ImagePath;
+import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.user.HistoryDTO;
 import com.navangs.maribong.dto.user.NotificationDTO;
 import com.navangs.maribong.dto.user.UserLoginDTO;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +37,11 @@ public class UserServiceImpl implements UserService {
     private final PostRepository postRepository;
     private final NotificationRepository notificationRepository;
     private final HistoryRepository historyRepository;
+    @Qualifier(ProfileImageServiceImpl.BEAN_NAME)
     private final ImageService imageService;
+
+    @Qualifier(ImageQueryPath.BEAN_NAME)
+    private final ImagePath imagePath;
 
     @Override
     @Transactional
@@ -97,7 +104,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         imageService.uploadImage(profile, randomProfileName);
 
-        return randomProfileName;
+        return String.join("/", imagePath.getProfilePath(), randomProfileName);
     }
 
     @Override

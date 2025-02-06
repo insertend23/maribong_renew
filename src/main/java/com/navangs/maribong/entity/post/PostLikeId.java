@@ -40,4 +40,11 @@ public class PostLikeId implements Serializable {
     public int hashCode() {
         return Objects.hash(postId, userId);
     }
+
+    public static PostLikeId of(Long postId, String userId) {
+        return PostLikeId.builder()
+            .postId(postId)
+            .userId(userId)
+            .build();
+    }
 }

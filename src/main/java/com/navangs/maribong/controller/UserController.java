@@ -2,6 +2,7 @@ package com.navangs.maribong.controller;
 
 import com.navangs.maribong.dto.user.HistoryDTO;
 import com.navangs.maribong.dto.user.NotificationDTO;
+import com.navangs.maribong.dto.user.UserIdRequestDTO;
 import com.navangs.maribong.dto.user.UserLoginDTO;
 import com.navangs.maribong.dto.user.UserModifyDTO;
 import com.navangs.maribong.dto.user.UserMyPageDTO;
@@ -11,7 +12,6 @@ import com.navangs.maribong.response.UserCountResponse;
 import com.navangs.maribong.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private static final BaseResponse SUCCESS_CODE_RESPONSE = new BaseResponse("100");
     private final UserService userService;
-    @Value("${prop.host-url}")
-    private String HOST_URL;
 
     @RequestMapping(value = "getUserCount", method = {RequestMethod.GET, RequestMethod.POST})
     public UserCountResponse getUserCount() {
@@ -54,22 +52,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "getUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
-    public UserMyPageDTO getUserInfo(@RequestBody String userId) {
-        return userService.getUserInfo(userId);
+    public UserMyPageDTO getUserInfo(@RequestBody UserIdRequestDTO userIdDTO) {
+        return userService.getUserInfo(userIdDTO.getUserId());
     }
 
     @PostMapping(value = "userUpdateProfile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse updateUserProfile(@RequestPart("userId") String userId,
-                                          @RequestPart("file") MultipartFile file) {
-        String profileName = userService.updateProfile(userId, file);
-        String profileUrl = HOST_URL + "/profile/" + profileName;
+                                          @RequestPart("userProfile") MultipartFile file) {
+        String profileUrl = userService.updateProfile(userId, file);
 
         return new BaseResponse(profileUrl);
     }
 
     @PostMapping(value = "userDeleteProfile")
-    public BaseResponse deleteUserProfile(@RequestBody String userId) {
-        userService.deleteProfile(userId);
+    public BaseResponse deleteUserProfile(@RequestBody UserIdRequestDTO userIdDTO) {
+        userService.deleteProfile(userIdDTO.getUserId());
 
         return new BaseResponse("success");
     }
@@ -82,12 +79,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "getAlerm", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<NotificationDTO> getAlerm(@RequestBody String userId) {
-        return userService.getNotification(userId);
+    public List<NotificationDTO> getAlerm(@RequestBody UserIdRequestDTO userIdDTO) {
+        return userService.getNotification(userIdDTO.getUserId());
     }
 
     @RequestMapping(value = "getHistory", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<HistoryDTO> getHistory(@RequestBody String userId) {
-        return userService.getHistory(userId);
+    public List<HistoryDTO> getHistory(@RequestBody UserIdRequestDTO userIdDTO) {
+        return userService.getHistory(userIdDTO.getUserId());
     }
 }

@@ -32,6 +32,42 @@ class PostRepositoryTest {
     }
 
     @Test
+    void findByUser_IdNotOrderByRegTimestampDesc() {
+        String excludeUserId = "admin";
+
+        List<Post> posts = postRepository.findByUser_IdNotOrderByRegTimestampDesc(excludeUserId);
+
+        Assertions.assertThat(posts).hasSize(13);
+        Assertions.assertThat(posts.stream().anyMatch(post -> post.getUser().getId().equals(excludeUserId))).isFalse();
+    }
+
+    @Test
+    void findBySearchOptions() {
+        String excludeUserId = "admin";
+        String searchCountry = "korea";
+        String searchGroup = "test3";
+        String searchReaction = "라벨 없음";
+
+        List<Post> posts = postRepository.findBySearchOptions(excludeUserId, searchCountry, searchGroup,
+            searchReaction);
+
+        Assertions.assertThat(posts).hasSize(2);
+    }
+
+    @Test
+    void findBySearchOptions_Content() {
+        String excludeUserId = "admin";
+        String searchCountry = "world";
+        String searchGroup = "글2";
+        String searchReaction = "라벨 없음";
+
+        List<Post> posts = postRepository.findBySearchOptions(excludeUserId, searchCountry, searchGroup,
+            searchReaction);
+
+        Assertions.assertThat(posts).hasSize(2);
+    }
+
+    @Test
     void countById() {
         Long postCount = postRepository.countByUserId("test");
 
