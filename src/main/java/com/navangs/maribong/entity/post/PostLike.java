@@ -1,5 +1,6 @@
 package com.navangs.maribong.entity.post;
 
+import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.entity.user.User;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -36,4 +37,14 @@ public class PostLike {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public static PostLike fromInsertDTO(PostLikeRequestDTO postLikeRequestDTO) {
+        Post post = Post.builder().id(postLikeRequestDTO.getCommunityNo()).build();
+        User user = User.builder().id(postLikeRequestDTO.getUserId()).build();
+
+        return PostLike.builder()
+            .post(post)
+            .user(user)
+            .build();
+    }
 }

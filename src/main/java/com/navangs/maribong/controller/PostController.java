@@ -116,7 +116,7 @@ public class PostController {
     @PostMapping(value = "getContect")
     public MyPostLikeResponse getMyPostLikeInPost(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
         String auserId = postService.getMyPostLikeInPost(postLikeRequestDTO);
-        
+
         return MyPostLikeResponse.builder()
             .auserId(auserId)
             .build();
@@ -124,6 +124,8 @@ public class PostController {
 
     @PostMapping(value = "insertContect")
     public BaseResponse addPostLike(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
+        postService.addPostLike(postLikeRequestDTO);
+
         return new BaseResponse("success");
     }
 

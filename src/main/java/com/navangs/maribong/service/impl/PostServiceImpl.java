@@ -157,6 +157,12 @@ public class PostServiceImpl implements PostService {
         return postLike != null ? postLike.getPost().getUser().getId() : null;
     }
 
+    @Override
+    public void addPostLike(PostLikeRequestDTO postLikeRequestDTO) {
+        PostLike postLike = PostLike.fromInsertDTO(postLikeRequestDTO);
+        postLikeRepository.save(postLike);
+    }
+
     private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
         return posts.stream()
             .map(post -> {

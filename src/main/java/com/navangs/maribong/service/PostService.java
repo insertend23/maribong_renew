@@ -42,4 +42,6 @@ public interface PostService {
     void deleteReply(ReplyDeleteDTO replyDeleteDTO);
 
     String getMyPostLikeInPost(PostLikeRequestDTO postLikeRequestDTO);
+
+    void addPostLike(PostLikeRequestDTO postLikeRequestDTO);
 }
