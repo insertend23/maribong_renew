@@ -129,12 +129,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<ReplyDTO> addReply(ReplyInsertDTO replyInsertDTO) {
+    public ReplyDTO addReply(ReplyInsertDTO replyInsertDTO) {
         Reply reply = Reply.fromInsertDTO(replyInsertDTO);
-        replyRepository.save(reply);
-        ReplyRequestDTO replyRequest = ReplyRequestDTO.fromInsertDTO(replyInsertDTO);
+        Reply savedReply = replyRepository.save(reply);
 
-        return getReplies(replyRequest);
+        return ReplyDTO.fromEntity(savedReply);
     }
 
     @Override

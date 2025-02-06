@@ -35,7 +35,7 @@ public interface PostService {
 
     List<ReplyDTO> getReplies(ReplyRequestDTO replyRequestDTO);
 
-    List<ReplyDTO> addReply(ReplyInsertDTO replyInsertDTO);
+    ReplyDTO addReply(ReplyInsertDTO replyInsertDTO);
 
     void updateReply(ReplyModifyDTO replyModifyDTO);
 

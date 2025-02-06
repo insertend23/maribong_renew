@@ -95,7 +95,7 @@ public class PostController {
     }
 
     @PostMapping(value = "insertReply")
-    public List<ReplyDTO> addReply(@RequestBody ReplyInsertDTO replyInsertDTO) {
+    public ReplyDTO addReply(@RequestBody ReplyInsertDTO replyInsertDTO) {
         return postService.addReply(replyInsertDTO);
     }
 
