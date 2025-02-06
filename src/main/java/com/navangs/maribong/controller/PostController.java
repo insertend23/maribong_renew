@@ -107,6 +107,8 @@ public class PostController {
 
     @PostMapping(value = "deleteReply")
     public BaseResponse deleteReply(@RequestBody ReplyDeleteDTO replyDeleteDTO) {
+        postService.deleteReply(replyDeleteDTO);
+
         return new BaseResponse("success");
     }
 

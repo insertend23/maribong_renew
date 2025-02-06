@@ -11,6 +11,7 @@ import com.navangs.maribong.dto.post.PostPhotosDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
+import com.navangs.maribong.dto.post.ReplyDeleteDTO;
 import com.navangs.maribong.dto.post.ReplyInsertDTO;
 import com.navangs.maribong.dto.post.ReplyModifyDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
@@ -134,12 +135,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void updateReply(ReplyModifyDTO replyModifyDTO) {
-        Reply reply = replyRepository.findById(replyModifyDTO.getReplyNo()).orElse(null);
-        if (reply == null) {
-            throw new InvalidReplyIdException();
-        }
+        Reply reply = validateReplyIdAndGetReply(replyModifyDTO.getReplyNo());
         reply.modify(replyModifyDTO.getContent());
         replyRepository.save(reply);
+    }
+
+    @Override
+    public void deleteReply(ReplyDeleteDTO replyDeleteDTO) {
+        Reply reply = validateReplyIdAndGetReply(replyDeleteDTO.getReplyNo());
+        replyRepository.delete(reply);
     }
 
     private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {
@@ -163,5 +167,14 @@ public class PostServiceImpl implements PostService {
         }
 
         return post;
+    }
+
+    private Reply validateReplyIdAndGetReply(Long replyId) {
+        Reply reply = replyRepository.findById(replyId).orElse(null);
+        if (reply == null) {
+            throw new InvalidReplyIdException();
+        }
+
+        return reply;
     }
 }
