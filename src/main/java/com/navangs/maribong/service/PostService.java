@@ -1,6 +1,7 @@
 package com.navangs.maribong.service;
 
 import com.navangs.maribong.dto.post.PostDeleteDTO;
+import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.PostPhotoModifyDTO;
@@ -39,4 +40,6 @@ public interface PostService {
     void updateReply(ReplyModifyDTO replyModifyDTO);
 
     void deleteReply(ReplyDeleteDTO replyDeleteDTO);
+
+    String getMyPostLikeInPost(PostLikeRequestDTO postLikeRequestDTO);
 }

@@ -4,6 +4,7 @@ import com.navangs.maribong.config.image.ImagePath;
 import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.post.PostDTO;
 import com.navangs.maribong.dto.post.PostDeleteDTO;
+import com.navangs.maribong.dto.post.PostLikeRequestDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.PostPhotoModifyDTO;
@@ -16,6 +17,8 @@ import com.navangs.maribong.dto.post.ReplyInsertDTO;
 import com.navangs.maribong.dto.post.ReplyModifyDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.entity.post.Post;
+import com.navangs.maribong.entity.post.PostLike;
+import com.navangs.maribong.entity.post.PostLikeId;
 import com.navangs.maribong.entity.post.PostPhoto;
 import com.navangs.maribong.entity.post.Reply;
 import com.navangs.maribong.exception.InvalidPostIdException;
@@ -144,6 +147,14 @@ public class PostServiceImpl implements PostService {
     public void deleteReply(ReplyDeleteDTO replyDeleteDTO) {
         Reply reply = validateReplyIdAndGetReply(replyDeleteDTO.getReplyNo());
         replyRepository.delete(reply);
+    }
+
+    @Override
+    public String getMyPostLikeInPost(PostLikeRequestDTO postLikeRequestDTO) {
+        PostLikeId postLikeId = PostLikeId.of(postLikeRequestDTO.getCommunityNo(), postLikeRequestDTO.getUserId());
+        PostLike postLike = postLikeRepository.findById(postLikeId).orElse(null);
+
+        return postLike != null ? postLike.getPost().getUser().getId() : null;
     }
 
     private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {

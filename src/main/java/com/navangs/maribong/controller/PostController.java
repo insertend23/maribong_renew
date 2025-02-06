@@ -14,6 +14,7 @@ import com.navangs.maribong.dto.post.ReplyModifyDTO;
 import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.dto.user.UserIdRequestDTO;
 import com.navangs.maribong.response.BaseResponse;
+import com.navangs.maribong.response.MyPostLikeResponse;
 import com.navangs.maribong.response.PostResponse;
 import com.navangs.maribong.service.PostService;
 import com.navangs.maribong.service.ReviewModelRequestService;
@@ -113,8 +114,12 @@ public class PostController {
     }
 
     @PostMapping(value = "getContect")
-    public String getMyPostLikeInPost(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
-        return null;
+    public MyPostLikeResponse getMyPostLikeInPost(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
+        String auserId = postService.getMyPostLikeInPost(postLikeRequestDTO);
+        
+        return MyPostLikeResponse.builder()
+            .auserId(auserId)
+            .build();
     }
 
     @PostMapping(value = "insertContect")
