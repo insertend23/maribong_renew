@@ -131,6 +131,8 @@ public class PostController {
 
     @PostMapping(value = "deleteContect")
     public BaseResponse deletePostLike(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
+        postService.deletePostLike(postLikeRequestDTO);
+
         return new BaseResponse("success");
     }
 

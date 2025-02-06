@@ -22,6 +22,7 @@ import com.navangs.maribong.entity.post.PostLikeId;
 import com.navangs.maribong.entity.post.PostPhoto;
 import com.navangs.maribong.entity.post.Reply;
 import com.navangs.maribong.exception.InvalidPostIdException;
+import com.navangs.maribong.exception.InvalidPostLikeIdException;
 import com.navangs.maribong.exception.InvalidReplyIdException;
 import com.navangs.maribong.repository.post.PostLikeRepository;
 import com.navangs.maribong.repository.post.PostPhotoRepository;
@@ -161,6 +162,16 @@ public class PostServiceImpl implements PostService {
     public void addPostLike(PostLikeRequestDTO postLikeRequestDTO) {
         PostLike postLike = PostLike.fromInsertDTO(postLikeRequestDTO);
         postLikeRepository.save(postLike);
+    }
+
+    @Override
+    public void deletePostLike(PostLikeRequestDTO postLikeRequestDTO) {
+        PostLikeId postLikeId = PostLikeId.of(postLikeRequestDTO.getCommunityNo(), postLikeRequestDTO.getUserId());
+        PostLike postLike = postLikeRepository.findById(postLikeId).orElse(null);
+        if (postLike == null) {
+            throw new InvalidPostLikeIdException();
+        }
+        postLikeRepository.delete(postLike);
     }
 
     private List<PostOverviewDTO> convertPostsToPostDTOs(List<Post> posts, String userId) {

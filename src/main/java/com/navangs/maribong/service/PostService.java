@@ -44,4 +44,6 @@ public interface PostService {
     String getMyPostLikeInPost(PostLikeRequestDTO postLikeRequestDTO);
 
     void addPostLike(PostLikeRequestDTO postLikeRequestDTO);
+
+    void deletePostLike(PostLikeRequestDTO postLikeRequestDTO);
 }
