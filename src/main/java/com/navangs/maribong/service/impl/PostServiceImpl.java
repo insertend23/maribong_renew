@@ -11,8 +11,10 @@ import com.navangs.maribong.dto.post.PostPhotosDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
+import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.entity.post.Post;
 import com.navangs.maribong.entity.post.PostPhoto;
+import com.navangs.maribong.entity.post.Reply;
 import com.navangs.maribong.exception.InvalidPostIdException;
 import com.navangs.maribong.repository.post.PostLikeRepository;
 import com.navangs.maribong.repository.post.PostPhotoRepository;
@@ -102,10 +104,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<List<ReplyDTO>> getReplies(List<Long> postIds) {
+    public List<List<ReplyDTO>> getAllReplies(List<Long> postIds) {
         return postIds.stream()
             .map(replyRepository::findByPost_Id)
             .map(replies -> replies.stream().map(ReplyDTO::fromEntity).toList())
+            .toList();
+    }
+
+    @Override
+    public List<ReplyDTO> getReplies(ReplyRequestDTO replyRequestDTO) {
+        List<Reply> replies = replyRepository.findByPost_Id(replyRequestDTO.getCommunityNo());
+
+        return replies.stream()
+            .map(ReplyDTO::fromEntity)
             .toList();
     }
 

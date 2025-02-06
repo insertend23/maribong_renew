@@ -44,7 +44,7 @@ public class PostController {
         List<Long> postIds = posts.stream()
             .map(PostOverviewDTO::getCommunityNo)
             .toList();
-        List<List<ReplyDTO>> replies = postService.getReplies(postIds);
+        List<List<ReplyDTO>> replies = postService.getAllReplies(postIds);
 
         return IntStream.range(0, posts.size())
             .mapToObj(index -> PostResponse.fromDTOs(posts.get(index), replies.get(index)))
@@ -88,14 +88,9 @@ public class PostController {
         return new BaseResponse("success");
     }
 
-    @PostMapping(value = "deleteCommunityImg")
-    public BaseResponse deletePostPhoto(@RequestPart String imgPath) {
-        return new BaseResponse("success");
-    }
-
     @PostMapping(value = "getReplyList")
     public List<ReplyDTO> getReplies(@RequestBody ReplyRequestDTO replyRequestDTO) {
-        return null;
+        return postService.getReplies(replyRequestDTO);
     }
 
     @PostMapping(value = "insertReply")

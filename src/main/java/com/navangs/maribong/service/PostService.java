@@ -7,6 +7,7 @@ import com.navangs.maribong.dto.post.PostPhotoModifyDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
 import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
+import com.navangs.maribong.dto.post.ReplyRequestDTO;
 import com.navangs.maribong.entity.post.Post;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,5 +27,7 @@ public interface PostService {
 
     void updatePostImage(List<MultipartFile> images, PostPhotoModifyDTO postPhotoModifyDTO);
 
-    List<List<ReplyDTO>> getReplies(List<Long> postIds);
+    List<List<ReplyDTO>> getAllReplies(List<Long> postIds);
+
+    List<ReplyDTO> getReplies(ReplyRequestDTO replyRequestDTO);
 }
