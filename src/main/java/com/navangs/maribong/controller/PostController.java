@@ -59,7 +59,7 @@ public class PostController {
     @PostMapping(value = "insertCommunity", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse addPost(@RequestPart(name = "picture", required = false) List<MultipartFile> images,
                                 @ModelAttribute @ParameterObject PostWriteDTO postWriteDTO) {
-        String reaction = String.join(", ", reviewModelRequestService.getReaction(postWriteDTO.getContent()));
+        String reaction = getReaction(postWriteDTO.getContent());
         postService.addPost(images, postWriteDTO, reaction);
 
         return new BaseResponse("success");
@@ -67,6 +67,9 @@ public class PostController {
 
     @PostMapping(value = "updateCommunity")
     public BaseResponse updatePost(@RequestBody PostModifyDTO postModifyDTO) {
+        String reaction = getReaction(postModifyDTO.getContent());
+        postService.updatePost(postModifyDTO, reaction);
+
         return new BaseResponse("success");
     }
 
@@ -118,5 +121,9 @@ public class PostController {
     @PostMapping(value = "deleteContect")
     public BaseResponse deletePostLike(@RequestBody PostLikeRequestDTO postLikeRequestDTO) {
         return new BaseResponse("success");
+    }
+
+    private String getReaction(String content) {
+        return String.join(", ", reviewModelRequestService.getReaction(content));
     }
 }

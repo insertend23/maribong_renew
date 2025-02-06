@@ -55,6 +55,15 @@ public class Post extends TimeEntity {
     @ColumnDefault("0")
     private Boolean mark;
 
+    public void modify(String content, String country, String groupName, String areaName, String reaction) {
+        this.content = content;
+        this.country = country;
+        this.groupName = groupName;
+        this.areaName = areaName;
+        this.reaction = reaction;
+        this.mark = false;
+    }
+
     public static Post fromWriteDTO(PostWriteDTO postWriteDTO, String reaction) {
         return Post.builder()
             .user(User.builder().id(postWriteDTO.getUserId()).build())

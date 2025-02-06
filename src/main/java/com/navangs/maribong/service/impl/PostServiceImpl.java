@@ -3,6 +3,7 @@ package com.navangs.maribong.service.impl;
 import com.navangs.maribong.config.image.ImagePath;
 import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.post.PostDTO;
+import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.PostPhotosDTO;
 import com.navangs.maribong.dto.post.PostRequestDTO;
@@ -10,6 +11,7 @@ import com.navangs.maribong.dto.post.PostWriteDTO;
 import com.navangs.maribong.dto.post.ReplyDTO;
 import com.navangs.maribong.entity.post.Post;
 import com.navangs.maribong.entity.post.PostPhoto;
+import com.navangs.maribong.exception.InvalidPostIdException;
 import com.navangs.maribong.repository.post.PostLikeRepository;
 import com.navangs.maribong.repository.post.PostPhotoRepository;
 import com.navangs.maribong.repository.post.PostRepository;
@@ -62,6 +64,17 @@ public class PostServiceImpl implements PostService {
         Post post = Post.fromWriteDTO(postWriteDTO, reaction);
         Post savedPost = postRepository.save(post);
         images.forEach(image -> addPostImage(image, savedPost));
+    }
+
+    @Override
+    public void updatePost(PostModifyDTO postModifyDTO, String reaction) {
+        Post post = postRepository.findById(postModifyDTO.getCommunityNo()).orElse(null);
+        if (post == null) {
+            throw new InvalidPostIdException();
+        }
+        post.modify(postModifyDTO.getContent(), postModifyDTO.getCountry(), postModifyDTO.getGroupName(),
+            postModifyDTO.getAreaName(), reaction);
+        postRepository.save(post);
     }
 
     @Override
