@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -112,9 +113,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<List<ReplyDTO>> getAllReplies(List<Long> postIds) {
+    public List<List<ReplyDTO>> getOverviewReplies(List<Long> postIds) {
         return postIds.stream()
-            .map(replyRepository::findByPost_Id)
+            .map(postId -> replyRepository.findByPost_Id(postId, Limit.of(3)))
             .map(replies -> replies.stream().map(ReplyDTO::fromEntity).toList())
             .toList();
     }

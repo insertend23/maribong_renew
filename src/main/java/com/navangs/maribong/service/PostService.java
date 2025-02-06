@@ -31,7 +31,7 @@ public interface PostService {
 
     void updatePostImage(List<MultipartFile> images, PostPhotoModifyDTO postPhotoModifyDTO);
 
-    List<List<ReplyDTO>> getAllReplies(List<Long> postIds);
+    List<List<ReplyDTO>> getOverviewReplies(List<Long> postIds);
 
     List<ReplyDTO> getReplies(ReplyRequestDTO replyRequestDTO);
 

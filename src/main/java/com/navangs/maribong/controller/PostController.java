@@ -45,7 +45,7 @@ public class PostController {
         List<Long> postIds = posts.stream()
             .map(PostOverviewDTO::getCommunityNo)
             .toList();
-        List<List<ReplyDTO>> replies = postService.getAllReplies(postIds);
+        List<List<ReplyDTO>> replies = postService.getOverviewReplies(postIds);
 
         return IntStream.range(0, posts.size())
             .mapToObj(index -> PostResponse.fromDTOs(posts.get(index), replies.get(index)))
