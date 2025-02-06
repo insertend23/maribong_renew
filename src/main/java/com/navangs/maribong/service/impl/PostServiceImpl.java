@@ -3,6 +3,7 @@ package com.navangs.maribong.service.impl;
 import com.navangs.maribong.config.image.ImagePath;
 import com.navangs.maribong.config.image.ImageQueryPath;
 import com.navangs.maribong.dto.post.PostDTO;
+import com.navangs.maribong.dto.post.PostDeleteDTO;
 import com.navangs.maribong.dto.post.PostModifyDTO;
 import com.navangs.maribong.dto.post.PostOverviewDTO;
 import com.navangs.maribong.dto.post.PostPhotosDTO;
@@ -68,10 +69,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void updatePost(PostModifyDTO postModifyDTO, String reaction) {
-        Post post = postRepository.findById(postModifyDTO.getCommunityNo()).orElse(null);
-        if (post == null) {
-            throw new InvalidPostIdException();
-        }
+        Post post = validatePostIdAndGetPost(postModifyDTO.getCommunityNo());
         post.modify(postModifyDTO.getContent(), postModifyDTO.getCountry(), postModifyDTO.getGroupName(),
             postModifyDTO.getAreaName(), reaction);
         postRepository.save(post);
@@ -88,6 +86,12 @@ public class PostServiceImpl implements PostService {
             .build();
         postPhotoRepository.save(photo);
         imageService.uploadImage(image, randomImageName);
+    }
+
+    @Override
+    public void deletePost(PostDeleteDTO postDeleteDTO) {
+        Post post = validatePostIdAndGetPost(postDeleteDTO.getCommunityNo());
+        postRepository.delete(post);
     }
 
     @Override
@@ -110,5 +114,14 @@ public class PostServiceImpl implements PostService {
                 return PostOverviewDTO.create2(postDTO, postPhotosDTO, replyCount, postLikes, myPostLike);
             })
             .toList();
+    }
+
+    private Post validatePostIdAndGetPost(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        if (post == null) {
+            throw new InvalidPostIdException();
+        }
+
+        return post;
     }
 }

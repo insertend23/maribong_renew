@@ -75,6 +75,8 @@ public class PostController {
 
     @PostMapping(value = "deleteCommunity")
     public BaseResponse deletePost(@RequestBody PostDeleteDTO postDeleteDTO) {
+        postService.deletePost(postDeleteDTO);
+
         return new BaseResponse("success");
     }
 
